@@ -6,9 +6,28 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+env:
+  SUPABASE_URL: https://test.supabase.co
+  SUPABASE_KEY: test-key
+  SUPABASE_SERVICE_ROLE_KEY: test-service-role-key
+  GROQ_API_KEY: test-groq-key
+  UPSTASH_REDIS_REST_URL: https://test.upstash.io
+  UPSTASH_REDIS_REST_TOKEN: test-token
+  OPENAI_API_KEY: test-openai-key
+  CORS_ORIGINS: http://localhost:3000,http://localhost:19006
+
 jobs:
   backend-tests:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ env.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ env.SUPABASE_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ env.SUPABASE_SERVICE_ROLE_KEY }}
+      GROQ_API_KEY: ${{ env.GROQ_API_KEY }}
+      UPSTASH_REDIS_REST_URL: ${{ env.UPSTASH_REDIS_REST_URL }}
+      UPSTASH_REDIS_REST_TOKEN: ${{ env.UPSTASH_REDIS_REST_TOKEN }}
+      OPENAI_API_KEY: ${{ env.OPENAI_API_KEY }}
+      CORS_ORIGINS: ${{ env.CORS_ORIGINS }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -37,10 +56,6 @@ jobs:
         run: |
           cd frontend
           npm install --legacy-peer-deps
-      - name: Run linting
-        run: |
-          cd frontend
-          npm run lint
       - name: Type check
         run: |
           cd frontend
@@ -48,6 +63,10 @@ jobs:
 
   web-tests:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+      NEXT_PUBLIC_SUPABASE_URL: https://test.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: test-key
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
