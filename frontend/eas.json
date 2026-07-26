@@ -1,0 +1,26 @@
+{
+    "build": {
+        "preview": {
+            "android": {
+                "buildType": "apk"
+            },
+            "env": {
+                "NPM_INSTALL_FLAGS": "--legacy-peer-deps --force"
+            }
+        },
+        "staging": {
+            "distribution": "internal",
+            "android": {
+                "buildType": "apk"
+            },
+            "channel": "staging",
+            "env": {
+                "NPM_INSTALL_FLAGS": "--legacy-peer-deps"
+            }
+        },
+        "production": {
+            "distribution": "store",
+            "channel": "production"
+        }
+    }
+}

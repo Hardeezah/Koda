@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Koda",
+    "slug": "frontend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.koda.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-asset"
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b0640421-8263-40b4-9d46-46ba72109afd"
+      }
+    }
+  }
+}

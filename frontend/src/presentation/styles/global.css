@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .font-inter {
+    font-family: Inter_400Regular;
+  }
+  .font-inter-bold {
+    font-family: Inter_700Bold;
+  }
+  .font-plex {
+    font-family: IBMPlexSans_500Medium;
+  }
+  .font-mono {
+    font-family: RobotoMono_400Regular;
+  }
+  .font-mono-medium {
+    font-family: RobotoMono_500Medium;
+  }
+}

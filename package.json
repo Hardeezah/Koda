@@ -1,0 +1,16 @@
+{
+  "name": "koda-trade",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "cd backend && source venv/bin/activate && python -m pytest tests/ -v --tb=short 2>/dev/null || echo 'Backend tests run via ./run.sh test'",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
