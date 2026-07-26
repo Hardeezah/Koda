@@ -19,15 +19,6 @@ env:
 jobs:
   backend-tests:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ env.SUPABASE_URL }}
-      SUPABASE_KEY: ${{ env.SUPABASE_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ env.SUPABASE_SERVICE_ROLE_KEY }}
-      GROQ_API_KEY: ${{ env.GROQ_API_KEY }}
-      UPSTASH_REDIS_REST_URL: ${{ env.UPSTASH_REDIS_REST_URL }}
-      UPSTASH_REDIS_REST_TOKEN: ${{ env.UPSTASH_REDIS_REST_TOKEN }}
-      OPENAI_API_KEY: ${{ env.OPENAI_API_KEY }}
-      CORS_ORIGINS: ${{ env.CORS_ORIGINS }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
