@@ -77,7 +77,7 @@ async def test_compliance_chain_uses_retrieval():
     mock_completion.choices = [mock_choice]
 
     with patch(
-        "app.infrastructure.rag.compliance_chain.regulatory_retriever.retrieve_for_compliance",
+        "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
         new=AsyncMock(return_value=mock_chunks),
     ):
         from app.infrastructure.rag.compliance_chain import ComplianceChain
@@ -113,10 +113,8 @@ async def test_analyze_compliance_routes_through_chain():
         )],
     )
 
-    with patch(
-        "app.infrastructure.rag.compliance_chain.compliance_chain.run",
-        new=AsyncMock(return_value=mock_verdict),
-    ):
+    with patch("app.infrastructure.rag.compliance_chain.compliance_chain") as mock_cc:
+        mock_cc.run = AsyncMock(return_value=mock_verdict)
         from app.infrastructure.ai.intelligence import IntelligenceService
         service = IntelligenceService()
         result = await service.analyze_compliance("Ginger", direction="import")

@@ -3,7 +3,7 @@ node_modules/
 .pnp
 .pnp.js
 
-# Environment - exclude ALL .env files everywhere
+# Environment
 .env
 .env.*
 !.env.example
@@ -19,7 +19,6 @@ build/
 venv/
 .venv/
 *.egg
-*.egg-info/
 
 # Expo / React Native
 .expo/
@@ -50,20 +49,10 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Testing
 coverage/
 .coverage
 htmlcov/
 
-# Vercel
-.vercel
 
-# Turbo
-.turbo
-
-# Docker
-.docker/
-docker-compose.override.yml

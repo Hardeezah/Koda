@@ -3,6 +3,18 @@ import os
 import pytest
 from unittest.mock import AsyncMock, MagicMock
 
+# Set test environment variables BEFORE any app imports
+os.environ.setdefault("GROQ_API_KEY", "test-groq-key")
+os.environ.setdefault("GROQ_MODEL", "llama-3.3-70b-versatile")
+os.environ.setdefault("COMPLIANCE_TEMPERATURE", "0.2")
+os.environ.setdefault("SUPABASE_URL", "https://test.supabase.co")
+os.environ.setdefault("SUPABASE_KEY", "test-key")
+os.environ.setdefault("SUPABASE_SERVICE_ROLE_KEY", "test-service-role-key")
+os.environ.setdefault("UPSTASH_REDIS_REST_URL", "https://test.upstash.io")
+os.environ.setdefault("UPSTASH_REDIS_REST_TOKEN", "test-token")
+os.environ.setdefault("OPENAI_API_KEY", "test-openai-key")
+os.environ.setdefault("CORS_ORIGINS", "http://localhost:3000,http://localhost:19006")
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 

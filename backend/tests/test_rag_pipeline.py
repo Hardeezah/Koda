@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
-from app.domain.models.rag import RetrievedChunk
+from app.domain.models.rag import RetrievedChunk, CitedComplianceVerdict, Citation
 
 
 @pytest.fixture
@@ -47,7 +47,7 @@ class TestRegulatoryRetriever:
 
         with patch(
             "app.infrastructure.rag.retriever.RegulatoryRetriever._embed_query",
-            new=AsyncMock(return_value=[0.1] * 1536),
+            new=AsyncMock(return_value=[0.1] * 384),
         ), patch(
             "app.infrastructure.rag.retriever.get_supabase_admin"
         ) as mock_get_supabase:
@@ -70,7 +70,7 @@ class TestRegulatoryRetriever:
 
         with patch(
             "app.infrastructure.rag.retriever.RegulatoryRetriever._embed_query",
-            new=AsyncMock(return_value=[0.1] * 1536),
+            new=AsyncMock(return_value=[0.1] * 384),
         ), patch(
             "app.infrastructure.rag.retriever.get_supabase_admin"
         ) as mock_get_supabase:
@@ -87,14 +87,13 @@ class TestRegulatoryRetriever:
     @pytest.mark.asyncio
     async def test_retrieve_retries_on_failure(self):
         call_count = 0
-        real_embed = None
 
         async def failing_then_succeeding(query):
             nonlocal call_count
             call_count += 1
             if call_count < 2:
                 raise ConnectionError("Supabase timeout")
-            return [0.1] * 1536
+            return [0.1] * 384
 
         resp = MagicMock()
         resp.data = []
@@ -145,7 +144,7 @@ class TestRegulatoryRetriever:
 
         with patch(
             "app.infrastructure.rag.retriever.RegulatoryRetriever._embed_query",
-            new=AsyncMock(return_value=[0.1] * 1536),
+            new=AsyncMock(return_value=[0.1] * 384),
         ), patch(
             "app.infrastructure.rag.retriever.get_supabase_admin"
         ) as mock_get_supabase:
@@ -185,7 +184,7 @@ class TestComplianceChainFailurePaths:
         mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
 
         with patch(
-            "app.infrastructure.rag.compliance_chain.regulatory_retriever.retrieve_for_compliance",
+            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
         ):
             chain = self._make_chain(mock_client)
@@ -200,7 +199,7 @@ class TestComplianceChainFailurePaths:
         )
 
         with patch(
-            "app.infrastructure.rag.compliance_chain.regulatory_retriever.retrieve_for_compliance",
+            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
         ):
             chain = self._make_chain(mock_client)
@@ -229,7 +228,7 @@ class TestComplianceChainFailurePaths:
         mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
 
         with patch(
-            "app.infrastructure.rag.compliance_chain.regulatory_retriever.retrieve_for_compliance",
+            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
         ):
             chain = self._make_chain(mock_client)
@@ -259,7 +258,7 @@ class TestComplianceChainFailurePaths:
         mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
 
         with patch(
-            "app.infrastructure.rag.compliance_chain.regulatory_retriever.retrieve_for_compliance",
+            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
         ):
             chain = self._make_chain(mock_client)
@@ -289,7 +288,7 @@ class TestComplianceChainFailurePaths:
         mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
 
         with patch(
-            "app.infrastructure.rag.compliance_chain.regulatory_retriever.retrieve_for_compliance",
+            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
         ):
             chain = self._make_chain(mock_client)
@@ -320,7 +319,7 @@ class TestComplianceChainFailurePaths:
         mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
 
         with patch(
-            "app.infrastructure.rag.compliance_chain.regulatory_retriever.retrieve_for_compliance",
+            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
         ):
             chain = self._make_chain(mock_client)
@@ -356,10 +355,8 @@ class TestIntelligenceServiceFallback:
         mock_completion = MagicMock()
         mock_completion.choices = [mock_choice]
 
-        with patch(
-            "app.infrastructure.rag.compliance_chain.compliance_chain.run",
-            new=AsyncMock(side_effect=Exception("RAG failed")),
-        ):
+        with patch("app.infrastructure.rag.compliance_chain.compliance_chain") as mock_cc:
+            mock_cc.run = AsyncMock(side_effect=Exception("RAG failed"))
             from app.infrastructure.ai.intelligence import IntelligenceService
             service = IntelligenceService()
             service.client = MagicMock()
