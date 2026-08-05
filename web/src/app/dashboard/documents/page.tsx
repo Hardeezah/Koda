@@ -93,10 +93,12 @@ function DocumentGeneratorContent() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const { data: { session } } = await supabase.auth.getSession();
       const docRes = await fetch(`${apiUrl}/api/v1/compliance/generate_document`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`,
         },
         body: JSON.stringify({
           document_code: documentCode,

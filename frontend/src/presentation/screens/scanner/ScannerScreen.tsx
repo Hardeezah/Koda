@@ -16,6 +16,7 @@ import { Button } from '../../components/Button';
 import Toast from 'react-native-toast-message';
 import * as ImageManipulator from 'expo-image-manipulator';
 import { useTradeMode } from '../../../context/TradeModeContext';
+import { supabase } from '../../../infrastructure/supabase';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000';
 
@@ -77,7 +78,7 @@ const ScannerScreen = ({ navigation }: any) => {
 
       let complianceData;
 
-      if (imageUri) {
+if (imageUri) {
         console.log("🖼️ Compressing image...");
         const manipulated = await ImageManipulator.manipulateAsync(
           imageUri,
@@ -87,12 +88,16 @@ const ScannerScreen = ({ navigation }: any) => {
 
         console.log(`✅ Compressed | base64 length: ${manipulated.base64?.length}`);
 
+        const { data: { session } } = await supabase.auth.getSession();
         const response = await fetch(`${API_URL}/api/v1/compliance/analyze_image`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token}`
+          },
           body: JSON.stringify({
             base64_image: manipulated.base64,
-            direction: tradeMode,  // ← correct variable
+            direction: tradeMode,
           }),
         });
 
@@ -106,15 +111,19 @@ const ScannerScreen = ({ navigation }: any) => {
         complianceData = await response.json();
         console.log("✅ Image analysis successful:", complianceData.product_name);
 
-      } else {
+} else {
         console.log("📝 Using text analysis...");
+        const { data: { session } } = await supabase.auth.getSession();
         const response = await fetch(`${API_URL}/api/v1/compliance/check`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token}`
+          },
           body: JSON.stringify({
             product_name: description.trim(),
             hs_code: null,
-            direction: tradeMode,  // ← correct variable
+            direction: tradeMode,
           }),
         });
 

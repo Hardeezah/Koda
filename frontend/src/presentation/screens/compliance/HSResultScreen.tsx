@@ -236,9 +236,13 @@ export const ComplianceCard = ({
 
       console.log('Sending to generate_document:', payload);
 
+      const { data: { session } } = await supabase.auth.getSession();
       const response = await fetch(`${API_URL}/api/v1/compliance/generate_document`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        },
         body: JSON.stringify(payload),
       });
 
@@ -387,9 +391,13 @@ const HSResultScreen = ({ navigation, route }: any) => {
     if (complianceData) return;
     const fetchCompliance = async () => {
       try {
+        const { data: { session } } = await supabase.auth.getSession();
         const response = await fetch(`${API_URL}/api/v1/compliance/check`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token}`
+          },
           body: JSON.stringify({
             product_name: result?.label,
             hs_code: null,

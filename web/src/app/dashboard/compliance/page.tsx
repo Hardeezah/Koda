@@ -48,10 +48,12 @@ export default function ComplianceChecker() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const { data: { session } } = await supabase.auth.getSession();
       const checkRes = await fetch(`${apiUrl}/api/v1/compliance/check`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`,
         },
         body: JSON.stringify({
           product_name: productName,

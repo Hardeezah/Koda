@@ -7,7 +7,7 @@ from app.domain.models.vision import ProductAttributes
 class VisionPipeline:
     def __init__(self):
         self.client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
-        self.vision_model = "meta-llama/llama-4-scout-17b-16e-instruct"
+        self.vision_model = "llama-3.2-90b-vision-preview"
 
     def _strip_data_prefix(self, base64_image: str) -> str:
         if "," in base64_image:
