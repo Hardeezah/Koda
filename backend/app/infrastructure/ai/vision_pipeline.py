@@ -50,11 +50,22 @@ class VisionPipeline:
             ],
             model=self.vision_model,
             temperature=0.1,
-            max_tokens=500,
-            response_format={"type": "json_object"},
+            max_tokens=2048,
         )
 
-        raw = json.loads(identification.choices[0].message.content)
+        content = identification.choices[0].message.content
+        if "</think>" in content:
+            content = content.split("</think>")[-1]
+            
+        content = content.strip()
+        if content.startswith("```json"):
+            content = content[7:]
+        elif content.startswith("```"):
+            content = content[3:]
+        if content.endswith("```"):
+            content = content[:-3]
+            
+        raw = json.loads(content.strip())
         return ProductAttributes(**raw)
 
 
