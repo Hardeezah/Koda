@@ -47,6 +47,24 @@ AGENCY_REGISTRY: List[Dict] = [
         "doc_date": "2025-01",
         "url": "https://www.son.gov.ng",
     },
+    {
+        "source": "nepc_export_guidelines",
+        "agency": "Nigerian Export Promotion Council",
+        "doc_date": "2026-08",
+        "url": "https://nepc.gov.ng",
+    },
+    {
+        "source": "firs_vat_on_trade",
+        "agency": "Federal Inland Revenue Service",
+        "doc_date": "2026-01",
+        "url": "https://firs.gov.ng",
+    },
+    {
+        "source": "ncs_import_documentation",
+        "agency": "Nigeria Customs Service",
+        "doc_date": "2026-08",
+        "url": "https://trade.gov.ng",
+    },
 ]
 
 ASSETS_DIR = pathlib.Path(__file__).resolve().parents[3] / "assets" / "regulations"

@@ -1,0 +1,31 @@
+# FEDERAL INLAND REVENUE SERVICE (FIRS) - VAT GUIDELINES ON IMPORTS AND EXPORTS
+
+## 1. Overview
+The Value Added Tax (VAT) in Nigeria is administered by the Federal Inland Revenue Service (FIRS) and governed by the Nigeria Tax Act (NTA) 2025. The standard VAT rate in Nigeria is 7.5%. The treatment of VAT varies significantly depending on whether goods are being imported into Nigeria or exported out of Nigeria.
+
+## 2. VAT on Imports
+Under the destination principle, goods imported into Nigeria and intended for domestic consumption or business use are subject to VAT.
+- **Tax Rate:** 7.5% applies to all non-exempt imported goods.
+- **Collection Agent:** The Nigeria Customs Service (NCS) collects import VAT on behalf of FIRS at the port of entry before goods can be cleared.
+- **Calculation Basis:** VAT on imports is calculated on the CIF (Cost, Insurance, and Freight) value of the goods, plus any applicable customs duties, levies, and excises.
+- **Input VAT Recovery:** Importers who are registered for VAT and use the imported goods for their taxable business operations can claim the import VAT paid as "Input VAT" against their "Output VAT". To claim this credit, the importer must possess the Bill of Entry, the Customs Treasury Receipt, and an attested commercial invoice.
+
+## 3. VAT on Exports
+To promote international trade and make Nigerian products globally competitive, exports receive highly favorable VAT treatment.
+- **Zero-Rating (0%):** All non-oil exports from Nigeria are strictly Zero-Rated (0%).
+- **Implication of Zero-Rating:** Zero-rating means that the exporter charges 0% VAT to the foreign buyer. Crucially, unlike "VAT Exempt" goods, businesses dealing in zero-rated exports are allowed to recover the Input VAT they incurred on the raw materials or operational expenses used to produce the exported goods. This prevents the "tax cascading" effect.
+- **Export Services:** Services exported to a non-resident individual or company outside Nigeria are also zero-rated, provided the service is completely consumed outside Nigeria.
+
+## 4. Documentation for Zero-Rated Exports
+To successfully claim zero-rating on exports and recover input VAT, businesses must maintain robust records to prove the goods left Nigeria. Required documents include:
+- Valid commercial invoice indicating export destination.
+- Bill of Lading, Airway Bill, or Road Waybill.
+- Nigeria Customs Service export declaration forms (e.g., NXP Form).
+- Evidence of receipt of foreign exchange (e.g., Bank Certificate of Capital Importation or export proceeds receipt).
+
+## 5. Exempt Goods
+Certain goods are outrightly exempt from VAT, whether imported or produced locally. These include:
+- Basic food items (e.g., raw agricultural products, bread, cereals).
+- Medical and pharmaceutical products.
+- Books and educational materials.
+- Note: Importers of exempt goods cannot recover any input VAT incurred in the process of bringing the goods to market.

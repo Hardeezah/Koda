@@ -1,0 +1,28 @@
+# NIGERIAN EXPORT PROMOTION COUNCIL (NEPC) - EXPORT GUIDELINES AND PROCEDURES
+
+## 1. Introduction
+The Nigerian Export Promotion Council (NEPC) is the Federal Government agency responsible for the promotion, development, and diversification of non-oil exports. Any entity seeking to export commercial goods from Nigeria must adhere to NEPC guidelines and obtain the necessary certifications.
+
+## 2. Exporter Registration
+All prospective exporters must register with the NEPC to obtain an Exporter's Registration Certificate.
+- **Eligibility:** Registration is only open to corporate bodies registered with the Corporate Affairs Commission (CAC) or cooperative societies. Individuals cannot register.
+- **E-Registration Portal (NEEP):** Registration, renewal, and certificate generation are done entirely online via the NEPC e-portal.
+- **Validity:** The Exporter's Certificate is valid for 18 months from the date of issuance and must be renewed subsequently.
+
+## 3. Essential Export Documentation
+Before goods can be cleared by the Nigeria Customs Service for export, the following mandatory documents are required:
+1. **Nigeria Export Proceeds (NXP) Form:** A mandatory statutory document to be completed by all exporters for commercial exports through an Authorized Dealer Bank. It ensures export proceeds are repatriated to Nigeria.
+2. **Proforma Invoice:** Detailing the terms of sale, price, and description of the goods.
+3. **Commercial Invoice & Packing List:** Final transaction value and detailed breakdown of goods.
+4. **Clean Certificate of Inspection (CCI):** Issued by government-appointed pre-shipment inspection agents (PIAs) verifying the quality, quantity, and price competitiveness of the export.
+5. **Certificate of Origin:** Demonstrates the origin of the goods, necessary for preferential tariffs under schemes like AfCFTA or AGOA.
+6. **Bill of Lading / Airway Bill:** Transport document from the shipping line or airline.
+7. **Specialized Certificates (If Applicable):** e.g., Phytosanitary Certificate from the Nigeria Agricultural Quarantine Service (NAQS) for agricultural products, or a Health Certificate from NAFDAC for food and drugs.
+
+## 4. Export Incentives
+The NEPC administers several incentives to encourage non-oil exports:
+- **Export Expansion Grant (EEG):** A post-shipment incentive designed to improve the competitiveness of Nigerian products in international markets. It is issued in the form of Export Credit Certificates (ECC).
+- **Export Development Fund (EDF):** Financial assistance to exporting companies to cover part of their initial expenses with respect to export promotion activities (e.g., participating in international trade fairs).
+
+## 5. Export Prohibition List
+Exporters must verify that their goods do not fall under the Export Prohibition List. Items commonly restricted or prohibited include raw hides and skins, timber (rough or sawn), scrap metal, and unprocessed rubber latex. Any attempt to export prohibited items will result in seizure and prosecution by Customs.

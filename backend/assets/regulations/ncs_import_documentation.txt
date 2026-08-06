@@ -1,0 +1,37 @@
+# NIGERIA CUSTOMS SERVICE (NCS) - STANDARD IMPORT DOCUMENTATION AND PROCEDURES
+
+## 1. Introduction
+The Nigeria Customs Service (NCS) is the primary government agency responsible for the collection of customs revenue, facilitation of national and international trade, and anti-smuggling activities. All goods imported into Nigeria must pass through NCS protocols and the Nigeria Single Window Trade Portal.
+
+## 2. Core Import Documents
+Before initiating any importation, the importer or their authorized customs clearing agent must ensure the following documentation is accurately prepared:
+
+1. **Form M:** The foundational document for all imports into Nigeria. It must be processed through an Authorized Dealer Bank (ADB). Form M declares the importer's intent to bring goods into the country and facilitates foreign exchange transactions through the Central Bank of Nigeria (CBN).
+2. **Pre-Arrival Assessment Report (PAAR):** Generated via the Nigeria Single Window Trade Portal after Form M has been validated. The PAAR calculates the baseline customs duties, taxes, and risk profile of the cargo before it arrives at the port.
+3. **Bill of Lading / Airway Bill:** The official shipping document issued by the carrier, detailing the type, quantity, and destination of the goods.
+4. **Commercial Invoice & Packing List:** Specifies the transaction value, seller, buyer, and the detailed contents and packaging of the shipment.
+5. **Combined Certificate of Value and Origin (CCVO):** Required to authenticate the value of the goods and their country of origin.
+6. **Marine Insurance Certificate:** Importers must obtain insurance for their cargo from a Nigerian insurance company.
+
+## 3. Agency Permits and Certificates
+Depending on the Harmonized System (HS) code and the nature of the goods, supplementary certificates from other regulatory bodies must be attached to the Customs declaration:
+- **SONCAP Certificate:** From the Standards Organisation of Nigeria (SON) for manufactured goods.
+- **NAFDAC Permit:** For food, drugs, chemicals, cosmetics, and medical devices.
+- **NESREA Clearance:** For environmental, electronic, and hazardous materials.
+
+## 4. The Clearance Process (NICIS II)
+The NCS utilizes the Nigeria Integrated Customs Information System (NICIS II) for processing imports.
+1. The importer's agent submits the Single Goods Declaration (SGD) electronically through NICIS II.
+2. The PAAR, Commercial Invoice, and Bill of Lading are attached.
+3. The system assesses the final payable Customs Duty, 7.5% VAT, 7% Port Surcharge, 0.5% ECOWAS Levy, and 1% Comprehensive Import Supervision Scheme (CISS) administrative charge.
+4. Payment is made to designated government accounts.
+5. The cargo is subjected to physical examination or non-intrusive scanning by Customs officers. If no discrepancies are found between the physical cargo and the SGD/PAAR, the goods are released.
+
+## 5. ECOWAS Common External Tariff (CET)
+Nigeria applies the ECOWAS Common External Tariff (CET) for imports from non-ECOWAS countries. The tariff bands are generally structured as:
+- 0% for essential social goods.
+- 5% for basic raw materials and capital goods.
+- 10% for intermediate goods.
+- 20% for finished consumer goods.
+- 35% for specific goods for economic protection.
+Importers must ensure correct HS Code classification to determine the appropriate CET band.

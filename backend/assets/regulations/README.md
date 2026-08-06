@@ -17,5 +17,8 @@ python -m scripts.ingest_regulations
 | `cbn_trade_finance_circular.pdf` | Central Bank of Nigeria |
 | `nafdac_import_guidelines.pdf` | NAFDAC |
 | `son_mancap_schedule.pdf` | Standards Organisation of Nigeria |
+| `nepc_export_guidelines.txt` | Nigerian Export Promotion Council |
+| `firs_vat_on_trade.txt` | Federal Inland Revenue Service |
+| `ncs_import_documentation.txt` | Nigeria Customs Service |
 
 Re-running ingestion is idempotent (replaces chunks per source).
