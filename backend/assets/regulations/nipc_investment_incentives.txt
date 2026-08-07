@@ -1,0 +1,32 @@
+# NIGERIAN INVESTMENT PROMOTION COMMISSION (NIPC) - TRADE AND INVESTMENT INCENTIVES
+
+## 1. Overview
+The Nigerian Investment Promotion Commission (NIPC) is an agency of the Federal Government established to encourage, promote, and coordinate investments in Nigeria. To facilitate trade and domestic manufacturing, the NIPC administers various investment incentives and tax holidays for both local and foreign investors.
+
+## 2. Pioneer Status Incentive (PSI)
+The Pioneer Status Incentive (PSI) is a tax holiday granted to companies operating in designated "Pioneer Industries."
+- **Benefit:** Exemption from the payment of corporate income tax for an initial period of three (3) years, extendable for one or two additional years (up to a maximum of 5 years).
+- **Eligibility:** The applicant must be engaged in an activity listed on the official Pioneer List (e.g., agriculture, mining, manufacturing of specific goods, solid waste recycling). The company must also meet a minimum qualifying capital expenditure threshold (currently N100 million).
+- **Trade Impact:** Goods manufactured by companies enjoying Pioneer Status are often highly competitive for export due to the reduced tax burden on the producing entity.
+
+## 3. Export Incentives Administered alongside NIPC
+While the Nigerian Export Promotion Council (NEPC) handles specific export grants, the NIPC promotes broader structural incentives:
+
+1. **Free Trade Zones (FTZs):** 
+   - Companies operating within approved Free Trade Zones (such as the Lekki Free Trade Zone or Calabar Free Trade Zone) are exempt from all federal, state, and local government taxes, levies, and rates.
+   - Goods manufactured in the FTZ can be imported into the Nigerian customs territory subject to the payment of standard customs duties on the raw material component.
+   - Capital and profits can be fully repatriated without restrictions.
+
+2. **Manufacture-in-Bond Scheme:**
+   - Designed to encourage manufacturers to import raw materials exclusively for the production of exportable goods without paying customs duties or other taxes upfront, provided they are backed by a bond issued by a recognized bank.
+
+3. **Capital Allowances:**
+   - Companies engaged in manufacturing and trade can claim significant capital allowances on their qualifying capital expenditures (such as machinery and equipment), reducing their taxable profits.
+
+## 4. Frequently Asked Questions (FAQs)
+
+**Q: Can a 100% foreign-owned company operate in Nigeria and benefit from these incentives?**
+A: Yes. The NIPC Act allows 100% foreign ownership of businesses in Nigeria, except in industries on the "Negative List" (e.g., arms, ammunition, narcotic drugs, and military wear). Foreign-owned companies are fully eligible for Pioneer Status and Free Trade Zone benefits.
+
+**Q: How does Pioneer Status affect VAT and Customs Duties?**
+A: Pioneer Status provides an exemption from *corporate income tax*. It does NOT exempt a company from paying Value Added Tax (VAT) or Customs Duties on imported machinery or raw materials, unless specifically waived under a different scheme (like the FTZ).

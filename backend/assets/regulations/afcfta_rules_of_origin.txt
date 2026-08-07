@@ -418,3 +418,22 @@ Key URLs:
 - UNCTAD AfCFTA Tariff Database: https://afcfta.unctad.org/tariffs
 - Nigeria Customs CET: https://cet.customs.gov.ng
 - Tralac AfCFTA Guide: https://www.tralac.org
+
+========================================================================
+FREQUENTLY ASKED QUESTIONS (FAQs)
+========================================================================
+
+Q: What are the AfCFTA Rules of Origin?
+A: The Rules of Origin (RoO) are the criteria used to determine whether a product was sufficiently produced or obtained within an AfCFTA member state to qualify for preferential (zero or reduced) tariffs.
+
+Q: How do I prove my goods originate from Nigeria under AfCFTA?
+A: You must obtain an AfCFTA Certificate of Origin issued by the Designated Competent Authority (the Nigeria Customs Service), which is applied for through the Nigerian Export Promotion Council (NEPC).
+
+Q: Does packaging count towards the origin of the goods?
+A: No, operations like simple packaging, preservation during transport, and simple mixing are considered "insufficient working or processing" and do not confer originating status (Article 7).
+
+Q: Can I use imported raw materials and still qualify for AfCFTA?
+A: Yes, provided the imported raw materials undergo "sufficient working or processing" in Nigeria. This is usually defined by a change in tariff heading (CTH), or ensuring that the Value of Non-Originating Materials (VNOM) does not exceed 60% of the ex-works price.
+
+Q: What is the tolerance or de minimis rule?
+A: Article 6A allows up to 15% of the ex-works price to be non-originating materials even if they don't meet the specific processing rules, EXCEPT for textiles and clothing where strict thresholds apply.

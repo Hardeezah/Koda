@@ -1,0 +1,36 @@
+# NAFDAC REGULATED PRODUCTS LIST & REGISTRATION EXEMPTIONS
+
+## 1. Overview
+The National Agency for Food and Drug Administration and Control (NAFDAC) regulates and controls the manufacture, importation, exportation, distribution, advertisement, sale, and use of specific product categories in Nigeria to ensure public health and safety.
+
+## 2. Strictly Regulated Product Categories
+Any product falling into the following categories must possess a NAFDAC Registration Number and comply with NAFDAC import guidelines before it can enter Nigeria.
+
+1. **Food Products:** All processed foods, packaged foods, dietary supplements, and food additives.
+2. **Drugs (Medicines):** Human and veterinary medicines, herbal medicines, vaccines, biological products, and active pharmaceutical ingredients (APIs).
+3. **Cosmetics:** Skincare products, hair care products, makeup, perfumes, and personal hygiene products.
+4. **Medical Devices:** Diagnostic equipment, surgical instruments, condoms, gloves, syringes, and implantable devices.
+5. **Chemicals:** Industrial chemicals, agrochemicals, pesticides, and laboratory reagents.
+6. **Packaged Water:** All forms of bottled, sachet, and packaged drinking water.
+7. **Detergents:** Cleaning agents, disinfectants, and sanitizers.
+
+## 3. Prohibited NAFDAC Items
+NAFDAC absolutely prohibits the importation of the following items:
+- Counterfeit or fake drugs.
+- Expired products.
+- Foods and cosmetics containing banned substances (e.g., hydroquinone, mercury, potassium bromate).
+- Unregistered products (smuggled items).
+
+## 4. Frequently Asked Questions (FAQs)
+
+**Q: Can I import a regulated product in small quantities for personal use without NAFDAC registration?**
+A: Yes. NAFDAC allows for the importation of small quantities of regulated products strictly for personal use, provided they are not for commercial resale. However, the exact quantity threshold is determined by Customs and NAFDAC inspectors at the port of entry.
+
+**Q: Do I need NAFDAC approval to import raw materials?**
+A: Yes. If the raw material is a chemical, food ingredient, or active pharmaceutical ingredient intended for manufacturing, you must obtain a NAFDAC Import Permit prior to importation.
+
+**Q: Are electronics regulated by NAFDAC?**
+A: Generally, no. General electronics are regulated by the Standards Organisation of Nigeria (SON). However, if the electronic device is a *Medical Device* (e.g., an MRI machine, blood pressure monitor, or therapeutic device), it falls strictly under NAFDAC jurisdiction.
+
+**Q: What is the penalty for importing unregistered food or drugs?**
+A: The goods will be seized and destroyed at the importer's expense. The importer may also face heavy fines, prosecution, and blacklisting.

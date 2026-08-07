@@ -354,3 +354,20 @@ NXP.3 Export proceeds must be repatriated within 90 days of shipment for
      and penalties.
 
 NXP.4 Form NXP processing is now free of charge (2026 FX Manual reform).
+
+========================================================================
+PART F: EXPORT PROHIBITION LIST
+========================================================================
+
+The following items are strictly prohibited from being exported out of Nigeria. Attempting to export these items can result in seizure of goods, forfeiture of transport vehicles, and criminal prosecution.
+
+F.1 Maize
+F.2 Timber (Rough or sawn wood)
+F.3 Raw Hides and Skin (Including Wet Blue and all unfinished leather)
+F.4 Scrap Metals
+F.5 Unprocessed Rubber Latex and Rubber Lumps
+F.6 Artifacts and Antiquities
+F.7 Wildlife Animals (Endangered species and their products, e.g., crocodile, elephant, lizard, eagle, monkey, zebra, lion, etc.)
+F.8 All imported goods (Goods imported into Nigeria cannot be re-exported in the same condition without value addition)
+
+Note: Exporters must verify current statuses with the Nigerian Export Promotion Council (NEPC) or Nigeria Customs Service (NCS) as the list is subject to periodic reviews.

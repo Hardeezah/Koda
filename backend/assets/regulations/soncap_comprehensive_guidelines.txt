@@ -1,0 +1,45 @@
+# SONCAP COMPREHENSIVE GUIDELINES & FAQs
+
+## 1. Overview
+The Standards Organisation of Nigeria Conformity Assessment Programme (SONCAP) is a mandatory scheme introduced by the Federal Government of Nigeria. Its primary objective is to ensure that all regulated products imported into Nigeria meet the minimum safety and quality requirements defined by the Nigerian Industrial Standards (NIS) or approved international equivalents.
+
+## 2. Who Administers SONCAP?
+While the Standards Organisation of Nigeria (SON) oversees the program, the actual testing, inspection, and certification processes are carried out by Independent Accredited Firms (IAFs) in the exporting countries. Authorized IAFs include Cotecna, Bureau Veritas, SGS, and Intertek.
+
+## 3. The SONCAP Process
+Importers must ensure their suppliers complete the SONCAP process in their home country before shipping the goods.
+
+### Step 1: Product Certificate (PC)
+The exporter applies for a Product Certificate through an IAF. This involves submitting product testing reports and technical documentation.
+- **Route A (PC1):** For unregistered products. Valid for 6 months (single shipment). Requires physical inspection of the consignment.
+- **Route B (PC2):** For registered products (frequent exporters). Valid for 12 months. Requires a factory audit.
+- **Route C (PC3):** For licensed products (manufacturers with proven compliance). Valid for 12 months. Requires comprehensive factory auditing and quality management system verification.
+
+### Step 2: Form M
+The Nigerian importer uses the Product Certificate (PC) to open an electronic Form M via their Authorized Dealer Bank on the Central Bank of Nigeria trade portal.
+
+### Step 3: SONCAP Certificate (SC)
+Once the goods are ready for shipment, the exporter applies for the SONCAP Certificate (SC). The SC is mandatory for every single shipment. The IAF verifies the PC and the shipment documents (Commercial Invoice, Bill of Lading).
+
+### Step 4: PAAR
+The importer uses the SONCAP Certificate (SC) to generate the Pre-Arrival Assessment Report (PAAR) from the Nigeria Customs Service.
+
+## 4. Exempted Products
+Not all products require SONCAP certification. Exemptions include:
+- Food products (regulated by NAFDAC)
+- Drugs and medicals (regulated by NAFDAC)
+- Chemicals used as raw materials by bona fide manufacturers
+- Military wares and equipment
+- Aviation-related goods
+- Used products (except automobiles)
+
+## 5. Frequently Asked Questions (FAQs)
+
+**Q: Can I process SONCAP after the goods arrive in Nigeria?**
+A: No. SONCAP must be processed in the country of supply before the goods are shipped. If goods arrive without an SC, the importer will face severe penalties, typically a fine of 20% of the CIF value of the goods or N2,000,000 (whichever is higher).
+
+**Q: Are raw materials subject to SONCAP?**
+A: Raw materials imported by bona fide manufacturers who are registered with the Manufacturers Association of Nigeria (MAN) for their own use (not for resale) are generally exempt from SONCAP.
+
+**Q: Is SONCAP the same as MANCAP?**
+A: No. SONCAP applies to imported goods entering Nigeria. MANCAP (Mandatory Conformity Assessment Programme) applies to goods locally manufactured within Nigeria.

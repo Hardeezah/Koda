@@ -378,20 +378,23 @@ NIS 737: Standard for tyres
 Full NIS database available at: https://son.gov.ng/standards/
 
 ========================================================================
-SECTION 7: KEY URLS AND RESOURCES
+SECTION 7: FREQUENTLY ASKED QUESTIONS (FAQs)
 ========================================================================
 
-SON Homepage: https://son.gov.ng/
-MANCAP Service: https://son.gov.ng/mancapservice/
-MANCAP FAQ: https://son.gov.ng/mancap-faq/
-MANCAP e-Portal: https://mancap.son.gov.ng/
-SONCAP Service: https://son.gov.ng/soncapservice/
-SONCAP FAQ: https://son.gov.ng/soncap-faq/
-SONCAP Portal: https://soncap.son.gov.ng/
-National Product Certification: https://son.gov.ng/national-product-certification/
-International Product Certification: https://son.gov.ng/son-product-certification/
-SON FAQs: https://son.gov.ng/faqs/
-SON Standards Database: https://son.gov.ng/standards/
+Q: What is SONCAP?
+A: It is a mandatory conformity assessment and verification procedure applied to all regulated products imported into Nigeria to ensure they meet the Nigerian Industrial Standards (NIS) or other approved international standards before entry.
 
-Cotecna Importer/Exporter Guide (PDF):
-https://www.cotecna.com/media/bw3aoq33/importer-exporter-guide-soncap-nigeria.pdf
+Q: Are food products subject to SONCAP?
+A: No, food products and medicines are regulated by NAFDAC, not SON. However, packaging materials might be subject to SONCAP.
+
+Q: When do I need to obtain a SONCAP Certificate (SC)?
+A: The compliance process must take place in the exporting country before the goods are shipped to Nigeria. The SC is required per shipment for customs clearance and to get the Pre-Arrival Assessment Report (PAAR).
+
+Q: What is a Product Certificate (PC)?
+A: A Product Certificate (PC1, PC2, or PC3) is a prerequisite for opening a Form M. It confirms that your product meets applicable standards, but you still need an SC per shipment.
+
+Q: Can I process SONCAP when my goods arrive in Nigeria?
+A: No, SONCAP processing must be completed prior to shipment from the country of origin. Failure to do so incurs a penalty of 20% of the CIF value or N2,000,000 (whichever is higher), and the goods may be rejected.
+
+Q: How long does it take to process SONCAP?
+A: When all documentation is submitted to the Independent Accredited Firm (IAF), standard processing takes 96 hours, with expedited options taking 24 hours.

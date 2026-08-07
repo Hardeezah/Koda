@@ -20,5 +20,8 @@ python -m scripts.ingest_regulations
 | `nepc_export_guidelines.txt` | Nigerian Export Promotion Council |
 | `firs_vat_on_trade.txt` | Federal Inland Revenue Service |
 | `ncs_import_documentation.txt` | Nigeria Customs Service |
+| `soncap_comprehensive_guidelines.txt` | Standards Organisation of Nigeria |
+| `nafdac_regulated_products_list.txt` | NAFDAC |
+| `nipc_investment_incentives.txt` | Nigerian Investment Promotion Commission |
 
 Re-running ingestion is idempotent (replaces chunks per source).

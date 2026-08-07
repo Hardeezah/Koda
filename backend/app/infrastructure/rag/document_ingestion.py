@@ -65,6 +65,24 @@ AGENCY_REGISTRY: List[Dict] = [
         "doc_date": "2026-08",
         "url": "https://trade.gov.ng",
     },
+    {
+        "source": "soncap_comprehensive_guidelines",
+        "agency": "Standards Organisation of Nigeria",
+        "doc_date": "2026-08",
+        "url": "https://son.gov.ng",
+    },
+    {
+        "source": "nafdac_regulated_products_list",
+        "agency": "NAFDAC",
+        "doc_date": "2026-08",
+        "url": "https://nafdac.gov.ng",
+    },
+    {
+        "source": "nipc_investment_incentives",
+        "agency": "Nigerian Investment Promotion Commission",
+        "doc_date": "2026-08",
+        "url": "https://nipc.gov.ng",
+    },
 ]
 
 ASSETS_DIR = pathlib.Path(__file__).resolve().parents[3] / "assets" / "regulations"
