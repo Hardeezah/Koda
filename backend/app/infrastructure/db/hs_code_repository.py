@@ -10,12 +10,34 @@ logger = logging.getLogger(__name__)
 
 class HSCodeRepository:
     def __init__(self):
-        from fastembed import TextEmbedding
-        self._embedder = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
+        self._embedder = None
+        self._embedding_disabled = False
+
+    def _get_embedder(self):
+        import os
+        if self._embedding_disabled or os.environ.get("DISABLE_LOCAL_EMBEDDINGS", "false").lower() == "true":
+            self._embedding_disabled = True
+            return None
+            
+        if self._embedder is None:
+            try:
+                from fastembed import TextEmbedding
+                self._embedder = TextEmbedding(model_name="BAAI/bge-small-en-v1.5", threads=1)
+            except Exception as e:
+                logger.error(f"Failed to load embedder: {e}")
+                self._embedding_disabled = True
+        return self._embedder
 
     async def _embed_query(self, query: str) -> List[float]:
+        embedder = self._get_embedder()
+        if not embedder:
+            # Return dummy 384D unit vector to satisfy pgvector
+            dummy = [0.0] * 384
+            dummy[0] = 1.0
+            return dummy
+
         def _do():
-            results = list(self._embedder.embed([query]))
+            results = list(embedder.embed([query]))
             return results[0].tolist()
         return await asyncio.get_event_loop().run_in_executor(None, _do)
 
