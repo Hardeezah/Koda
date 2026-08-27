@@ -3,6 +3,9 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.middleware.rate_limit import RateLimitMiddleware
+import phoenix as px
+from openinference.instrumentation.groq import GroqInstrumentor
+
 from app.api.v1.endpoints import (
     health,
     auth,
@@ -20,15 +23,20 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="KodaTrade API", version="0.1.0")
 
+# Initialize Phoenix LLMOps tracing conditionally
+if os.environ.get("ENABLE_PHOENIX", "false").lower() == "true":
+    px.launch_app()
+    GroqInstrumentor().instrument()
+
 ALLOWED_ORIGINS = os.environ.get(
     "CORS_ORIGINS",
-    "http://localhost:8081,http://localhost:3000,http://localhost:19006",
+    "*",
 ).split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
+    allow_origins=["*"] if "*" in ALLOWED_ORIGINS else ALLOWED_ORIGINS,
+    allow_credentials=False if "*" in ALLOWED_ORIGINS else True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Authorization", "Content-Type"],
 )

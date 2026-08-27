@@ -15,7 +15,7 @@ from app.api.v1.deps import get_current_user
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/afcfta", tags=["AfCFTA"])
+router = APIRouter(tags=["AfCFTA"])
 
 
 @router.post("/check", response_model=AfCFTACheckResponse)

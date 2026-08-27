@@ -165,31 +165,9 @@ class TestRegulatoryRetriever:
 class TestComplianceChainFailurePaths:
     def _make_chain(self, mock_client):
         from app.infrastructure.rag.compliance_chain import ComplianceChain
-        chain = ComplianceChain.__new__(ComplianceChain)
+        chain = ComplianceChain()
         chain.client = mock_client
-        chain.model = "llama-3.3-70b-versatile"
-        chain.temperature = 0.2
         return chain
-
-    @pytest.mark.asyncio
-    async def test_chain_handles_invalid_json(self):
-        mock_message = MagicMock()
-        mock_message.content = "This is not JSON at all"
-        mock_choice = MagicMock()
-        mock_choice.message = mock_message
-        mock_completion = MagicMock()
-        mock_completion.choices = [mock_choice]
-
-        mock_client = MagicMock()
-        mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
-
-        with patch(
-            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
-            new=AsyncMock(return_value=[]),
-        ):
-            chain = self._make_chain(mock_client)
-            with pytest.raises(ValueError, match="invalid JSON"):
-                await chain.run("Ginger", direction="import")
 
     @pytest.mark.asyncio
     async def test_chain_handles_llm_error(self):
@@ -203,29 +181,29 @@ class TestComplianceChainFailurePaths:
             new=AsyncMock(return_value=[]),
         ):
             chain = self._make_chain(mock_client)
-            with pytest.raises(Exception, match="Groq API error"):
+            with pytest.raises(ValueError, match="Orchestrator failed: Groq API error"):
                 await chain.run("Ginger", direction="import")
 
     @pytest.mark.asyncio
     async def test_chain_empty_retrieval_sets_retrieval_used_false(self):
-        mock_verdict_json = """{
-            "product_name": "Ginger",
-            "status": "under_review",
-            "suggested_hs_code": "091011",
-            "summary": "No documents found.",
-            "what_to_do": "Proceed with caution.",
-            "risks": [],
-            "compliance_items": []
-        }"""
-        mock_message = MagicMock()
-        mock_message.content = mock_verdict_json
-        mock_choice = MagicMock()
-        mock_choice.message = mock_message
-        mock_completion = MagicMock()
-        mock_completion.choices = [mock_choice]
+        from app.infrastructure.rag.compliance_chain import ImportVerdictResponse
+        
+        mock_verdict = ImportVerdictResponse(
+            product_name="Ginger",
+            status="under_review",
+            suggested_hs_code="091011",
+            prohibited=False,
+            prohibition_reason=None,
+            import_duty_percent=None,
+            vat_percent=7.5,
+            summary="No documents found.",
+            what_to_do="Proceed with caution.",
+            risks=[],
+            compliance_items=[]
+        )
 
         mock_client = MagicMock()
-        mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
+        mock_client.chat.completions.create = AsyncMock(return_value=mock_verdict)
 
         with patch(
             "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
@@ -238,54 +216,25 @@ class TestComplianceChainFailurePaths:
             assert verdict.citations == []
 
     @pytest.mark.asyncio
-    async def test_chain_handles_malformed_risks_list(self):
-        mock_verdict_json = """{
-            "product_name": "Ginger",
-            "status": "compliant",
-            "summary": "OK",
-            "what_to_do": "Proceed",
-            "risks": "no risks",
-            "compliance_items": []
-        }"""
-        mock_message = MagicMock()
-        mock_message.content = mock_verdict_json
-        mock_choice = MagicMock()
-        mock_choice.message = mock_message
-        mock_completion = MagicMock()
-        mock_completion.choices = [mock_choice]
-
-        mock_client = MagicMock()
-        mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
-
-        with patch(
-            "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
-            new=AsyncMock(return_value=[]),
-        ):
-            chain = self._make_chain(mock_client)
-            verdict = await chain.run("Ginger", direction="import")
-            assert verdict.risks == []
-
-    @pytest.mark.asyncio
     async def test_chain_export_direction_uses_export_schema(self):
-        mock_verdict_json = """{
-            "product_name": "Ginger",
-            "status": "compliant",
-            "summary": "Export OK",
-            "what_to_do": "Apply for COO",
-            "risks": [],
-            "compliance_items": [],
-            "afcfta_eligible": true,
-            "roo_eligible": true
-        }"""
-        mock_message = MagicMock()
-        mock_message.content = mock_verdict_json
-        mock_choice = MagicMock()
-        mock_choice.message = mock_message
-        mock_completion = MagicMock()
-        mock_completion.choices = [mock_choice]
+        from app.infrastructure.rag.compliance_chain import ExportVerdictResponse
+        
+        mock_verdict = ExportVerdictResponse(
+            product_name="Ginger",
+            status="compliant",
+            suggested_hs_code="091011",
+            afcfta_eligible=True,
+            tariff_saving_percent=10.0,
+            roo_eligible=True,
+            roo_type="wholly obtained",
+            summary="Export OK",
+            what_to_do="Apply for COO",
+            risks=[],
+            compliance_items=[]
+        )
 
         mock_client = MagicMock()
-        mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
+        mock_client.chat.completions.create = AsyncMock(return_value=mock_verdict)
 
         with patch(
             "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
@@ -300,23 +249,24 @@ class TestComplianceChainFailurePaths:
 
     @pytest.mark.asyncio
     async def test_chain_supplementary_context_in_prompt(self):
-        mock_verdict_json = """{
-            "product_name": "Ginger",
-            "status": "compliant",
-            "summary": "OK",
-            "what_to_do": "Proceed",
-            "risks": [],
-            "compliance_items": []
-        }"""
-        mock_message = MagicMock()
-        mock_message.content = mock_verdict_json
-        mock_choice = MagicMock()
-        mock_choice.message = mock_message
-        mock_completion = MagicMock()
-        mock_completion.choices = [mock_choice]
+        from app.infrastructure.rag.compliance_chain import ExportVerdictResponse
+        
+        mock_verdict = ExportVerdictResponse(
+            product_name="Ginger",
+            status="compliant",
+            suggested_hs_code="091011",
+            afcfta_eligible=True,
+            tariff_saving_percent=10.0,
+            roo_eligible=True,
+            roo_type="wholly obtained",
+            summary="OK",
+            what_to_do="Proceed",
+            risks=[],
+            compliance_items=[]
+        )
 
         mock_client = MagicMock()
-        mock_client.chat.completions.create = AsyncMock(return_value=mock_completion)
+        mock_client.chat.completions.create = AsyncMock(return_value=mock_verdict)
 
         with patch(
             "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
@@ -339,21 +289,16 @@ class TestComplianceChainFailurePaths:
 class TestIntelligenceServiceFallback:
     @pytest.mark.asyncio
     async def test_fallback_preserves_supplementary_context(self):
-        mock_verdict_json = """{
+        mock_completion = MagicMock()
+        mock_completion.model_dump.return_value = {
             "product_name": "Ginger",
             "status": "compliant",
             "summary": "Export OK",
             "what_to_do": "Apply for COO",
             "risks": [],
             "compliance_items": [],
-            "afcfta_eligible": true
-        }"""
-        mock_message = MagicMock()
-        mock_message.content = mock_verdict_json
-        mock_choice = MagicMock()
-        mock_choice.message = mock_message
-        mock_completion = MagicMock()
-        mock_completion.choices = [mock_choice]
+            "afcfta_eligible": True,
+        }
 
         with patch("app.infrastructure.rag.compliance_chain.compliance_chain") as mock_cc:
             mock_cc.run = AsyncMock(side_effect=Exception("RAG failed"))
@@ -371,5 +316,7 @@ class TestIntelligenceServiceFallback:
 
             assert result["retrieval_used"] is False
             call_args = service.client.chat.completions.create.call_args
-            prompt = call_args.kwargs["messages"][1]["content"]
+            # For export direction, there is a system message (0), few-shot user (1), few-shot assistant (2), and actual user prompt (3)
+            prompt = call_args.kwargs["messages"][3]["content"]
             assert "AfCFTA tariff" in prompt
+

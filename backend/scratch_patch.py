@@ -16,7 +16,6 @@ from app.infrastructure.ai.prompts import (
     DOCUMENT_GENERATION_SYSTEM_PROMPT,
     DOCUMENT_GENERATION_PROMPT_TEMPLATE
 )
-from app.infrastructure.ai.cache import llm_cache
 
 logger = logging.getLogger(__name__)
 
@@ -105,7 +104,6 @@ class IntelligenceService:
             hs_code=hs_code or "Unknown"
         )
 
-    @llm_cache(ttl_seconds=86400)
     async def analyze_compliance(
         self,
         product_name: str,
@@ -176,7 +174,6 @@ class IntelligenceService:
         result["citations"] = []
         return result
 
-    @llm_cache(ttl_seconds=86400)
     async def analyze_image(self, base64_image: str, direction: str = "import") -> dict:
         from app.infrastructure.ai.vision_pipeline import vision_pipeline
         from app.infrastructure.ai.hs_classifier import hs_classifier
@@ -215,7 +212,6 @@ class IntelligenceService:
             raise Exception(f"Vision analysis failed: {str(e)}") from e
 
     @retry(wait=wait_exponential(min=1, max=10), stop=stop_after_attempt(3))
-    @llm_cache(ttl_seconds=86400)
     async def generate_document(
         self,
         document_code: str,

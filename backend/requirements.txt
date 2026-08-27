@@ -27,3 +27,14 @@ httpx
 ruff
 black
 upstash-redis
+instructor
+tenacity
+arize-phoenix
+openinference-instrumentation-groq
+langchain-text-splitters
+langgraph
+ragas
+datasets
+apscheduler
+duckduckgo-search
+mlflow

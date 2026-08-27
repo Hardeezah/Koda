@@ -25,6 +25,9 @@ export interface ScoreBreakdown {
   cacPoints: number;
   ledgerPoints: number;
   compliancePoints: number;
+  tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
+  nextTier?: string;
+  pointsToNextTier?: number;
 }
 
 /**
@@ -44,6 +47,24 @@ export function calculateScore(input: ScoreInput): ScoreBreakdown {
   const compliancePoints = Math.min(compliantEntries * 5, 25);
 
   const total = Math.min(profilePoints + cacPoints + ledgerPoints + compliancePoints, 100);
+  
+  let tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum' = 'Bronze';
+  let nextTier: string | undefined = 'Silver';
+  let pointsToNextTier: number | undefined = 25 - total;
 
-  return { total, profilePoints, cacPoints, ledgerPoints, compliancePoints };
+  if (total >= 75) {
+    tier = 'Platinum';
+    nextTier = undefined;
+    pointsToNextTier = undefined;
+  } else if (total >= 50) {
+    tier = 'Gold';
+    nextTier = 'Platinum';
+    pointsToNextTier = 75 - total;
+  } else if (total >= 25) {
+    tier = 'Silver';
+    nextTier = 'Gold';
+    pointsToNextTier = 50 - total;
+  }
+
+  return { total, profilePoints, cacPoints, ledgerPoints, compliancePoints, tier, nextTier, pointsToNextTier };
 }

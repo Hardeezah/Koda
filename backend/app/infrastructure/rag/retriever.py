@@ -35,6 +35,7 @@ class RegulatoryRetriever:
                 supabase = get_supabase_admin()
 
                 params = {
+                    "query_text": query,
                     "query_embedding": query_vector,
                     "match_count": match_count,
                 }
@@ -42,7 +43,7 @@ class RegulatoryRetriever:
                     params["filter_agency"] = filter_agency
 
                 response = await asyncio.get_event_loop().run_in_executor(
-                    None, lambda: supabase.rpc("match_document_chunks", params).execute()
+                    None, lambda: supabase.rpc("match_document_chunks_hybrid", params).execute()
                 )
 
                 if not response.data:

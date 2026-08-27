@@ -5,6 +5,21 @@ from datetime import datetime
 from app.domain.models.compliance import TradeStatus, ComplianceRisk, ComplianceReport, AfCFTACheckRequest, AfCFTACheckResponse
 from app.domain.models.vision import ProductAttributes, HSCodeCandidate, HSCodeResult, VisualAnalysisResult
 from app.domain.models.rag import RetrievedChunk, Citation, ComplianceItem, Risk, CitedComplianceVerdict
+from app.domain.models.documents import (
+    Incoterm,
+    PaymentTerm,
+    PartyInfo,
+    LineItem,
+    CommercialInvoice,
+    PackageDetail,
+    PackingList,
+    NXPFormRequest,
+    CertificateOfOrigin,
+    PhytosanitaryCertificateRequest,
+    SingleGoodsDeclaration,
+    CleanCertificateOfInspection,
+    BillOfLading,
+)
 
 class Profile(BaseModel):
     id: str
@@ -75,4 +90,17 @@ __all__ = [
     "ComplianceItem",
     "Risk",
     "CitedComplianceVerdict",
+    "Incoterm",
+    "PaymentTerm",
+    "PartyInfo",
+    "LineItem",
+    "CommercialInvoice",
+    "PackageDetail",
+    "PackingList",
+    "NXPFormRequest",
+    "CertificateOfOrigin",
+    "PhytosanitaryCertificateRequest",
+    "SingleGoodsDeclaration",
+    "CleanCertificateOfInspection",
+    "BillOfLading",
 ]

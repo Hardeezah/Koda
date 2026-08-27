@@ -89,12 +89,22 @@ ASSETS_DIR = pathlib.Path(__file__).resolve().parents[3] / "assets" / "regulatio
 
 
 def _chunk_text(text: str) -> List[str]:
-    chunks: List[str] = []
-    i = 0
-    while i < len(text):
-        chunks.append(text[i : i + CHUNK_SIZE])
-        i += CHUNK_SIZE - CHUNK_OVERLAP
-    return [c for c in chunks if c.strip()]
+    try:
+        from langchain_text_splitters import RecursiveCharacterTextSplitter
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200,
+            separators=["\n\n", "\n", ".", " ", ""],
+        )
+        return splitter.split_text(text)
+    except ImportError:
+        logger.warning("langchain-text-splitters not installed, falling back to naive chunking.")
+        chunks: List[str] = []
+        i = 0
+        while i < len(text):
+            chunks.append(text[i : i + CHUNK_SIZE])
+            i += CHUNK_SIZE - CHUNK_OVERLAP
+        return [c for c in chunks if c.strip()]
 
 
 def _extract_text_from_pdf(pdf_path: pathlib.Path) -> str:

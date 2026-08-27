@@ -59,33 +59,29 @@ async def test_compliance_chain_uses_retrieval():
             similarity=0.82,
         )
     ]
-    mock_verdict_json = """{
-        "product_name": "Ginger",
-        "status": "compliant",
-        "suggested_hs_code": "091011",
-        "summary": "Ginger may be imported with Form M.",
-        "what_to_do": "Apply for Form M at your bank.",
-        "risks": [],
-        "compliance_items": []
-    }"""
-
-    mock_message = MagicMock()
-    mock_message.content = mock_verdict_json
-    mock_choice = MagicMock()
-    mock_choice.message = mock_message
-    mock_completion = MagicMock()
-    mock_completion.choices = [mock_choice]
+    
+    from app.infrastructure.rag.compliance_chain import ImportVerdictResponse, ComplianceChain
+    mock_verdict = ImportVerdictResponse(
+        product_name="Ginger",
+        status="compliant",
+        suggested_hs_code="091011",
+        prohibited=False,
+        prohibition_reason=None,
+        import_duty_percent=None,
+        vat_percent=7.5,
+        summary="Ginger may be imported with Form M.",
+        what_to_do="Apply for Form M at your bank.",
+        risks=[],
+        compliance_items=[]
+    )
 
     with patch(
         "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
         new=AsyncMock(return_value=mock_chunks),
     ):
-        from app.infrastructure.rag.compliance_chain import ComplianceChain
-        chain = ComplianceChain.__new__(ComplianceChain)
+        chain = ComplianceChain()
         chain.client = MagicMock()
-        chain.client.chat.completions.create = AsyncMock(return_value=mock_completion)
-        chain.model = "llama-3.3-70b-versatile"
-        chain.temperature = 0.2
+        chain.client.chat.completions.create = AsyncMock(return_value=mock_verdict)
 
         verdict = await chain.run("Ginger", direction="import")
 

@@ -1,12 +1,14 @@
 import os
-import json
+import instructor
 from groq import AsyncGroq
+from tenacity import retry, wait_exponential, stop_after_attempt
 from app.domain.models.vision import ProductAttributes
+from app.infrastructure.ai.prompts import VISION_PIPELINE_SYSTEM_PROMPT
 
 
 class VisionPipeline:
     def __init__(self):
-        self.client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
+        self.client = instructor.from_groq(AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON)
         self.vision_model = "qwen/qwen3.6-27b"
 
     def _strip_data_prefix(self, base64_image: str) -> str:
@@ -14,10 +16,11 @@ class VisionPipeline:
             return base64_image.split(",", 1)[1]
         return base64_image
 
+    @retry(wait=wait_exponential(min=1, max=10), stop=stop_after_attempt(3))
     async def identify_product(self, base64_image: str) -> ProductAttributes:
         image_data = self._strip_data_prefix(base64_image)
 
-        identification = await self.client.chat.completions.create(
+        return await self.client.chat.completions.create(
             messages=[
                 {
                     "role": "user",
@@ -28,45 +31,16 @@ class VisionPipeline:
                         },
                         {
                             "type": "text",
-                            "text": (
-                                "You are a customs classification expert. Analyze this product image and extract structured trade attributes. "
-                                "Return ONLY a JSON object with these exact keys:\n"
-                                "{\n"
-                                '  "product_name": "proper commercial trade name",\n'
-                                '  "category": "one of: food, textile, electronics, chemicals, machinery, agricultural, pharmaceutical, cosmetics, building_materials, consumer_goods, vehicles, other",\n'
-                                '  "description": "one precise sentence describing this product for customs purposes",\n'
-                                '  "material": "primary material composition e.g. cotton, steel, polyester, glass, or null",\n'
-                                '  "brand": "brand name if visible or null",\n'
-                                '  "weight_class": "light/medium/heavy or null",\n'
-                                '  "purpose": "primary use e.g. food consumption, industrial, medical, personal care",\n'
-                                '  "origin_cues": "any visible country of origin text or manufacturing markings or null",\n'
-                                '  "packaging": "describe packaging: bulk, retail box, sachet, bottle, bag, or null",\n'
-                                '  "condition": "new/used/refurbished"\n'
-                                "}"
-                            ),
+                            "text": VISION_PIPELINE_SYSTEM_PROMPT,
                         },
                     ],
                 }
             ],
+            response_model=ProductAttributes,
             model=self.vision_model,
             temperature=0.1,
             max_tokens=2048,
         )
-
-        content = identification.choices[0].message.content
-        if "</think>" in content:
-            content = content.split("</think>")[-1]
-            
-        content = content.strip()
-        if content.startswith("```json"):
-            content = content[7:]
-        elif content.startswith("```"):
-            content = content[3:]
-        if content.endswith("```"):
-            content = content[:-3]
-            
-        raw = json.loads(content.strip())
-        return ProductAttributes(**raw)
 
 
 vision_pipeline = VisionPipeline()

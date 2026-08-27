@@ -1,0 +1,23 @@
+CENTRAL BANK OF NIGERIA (CBN)
+FOREIGN EXCHANGE MANUAL - TRADE AND EXCHANGE DEPARTMENT
+GUIDELINES FOR IMPORTS AND EXPORTS
+
+1. IMPORT PROCEDURE (FORM M)
+Any person intending to import physical goods into Nigeria must process a Form 'M' through an Authorized Dealer Bank irrespective of the value and whether or not payment is involved.
+- Electronic Form M (e-Form M): All applications must be submitted electronically via the Nigeria Single Window Trade Portal.
+- Documentation: The e-Form 'M' must be supported by a Proforma Invoice, Insurance Certificate (issued by a Nigerian insurance company), and a Regulatory Certificate (e.g., NAFDAC, SONCAP) where applicable.
+- Validity: Form 'M' is valid for 180 days for general goods and 365 days for plant and machinery.
+- PAAR: Upon processing of Form 'M' and shipment of goods, the Authorized Dealer will request the issuance of a Pre-Arrival Assessment Report (PAAR) by the Nigeria Customs Service.
+
+2. EXPORT PROCEDURE (FORM NXP)
+Any person intending to export commercial goods from Nigeria must complete a Nigeria Export Proceeds (NXP) Form.
+- Repatriation of Export Proceeds: All exporters must repatriate export proceeds into their domiciliary account in Nigeria within 90 days (for non-oil exports) from the date of shipment.
+- Documentation: The e-NXP form must be supported by a Proforma Invoice, Sales Contract, NEPC Exporter's Certificate, and relevant quality/health certificates (e.g., Phytosanitary Certificate from NAQS).
+- Clean Certificate of Inspection (CCI): All exports from Nigeria are subject to inspection by Pre-shipment Inspection Agents (PIAs) appointed by the Federal Government, who issue a CCI.
+
+3. INVISIBLE TRADE (FORM A)
+For the payment of invisible trades (e.g., school fees, medical bills, airline remittances), applicants must complete Form 'A' via the Trade System.
+
+4. PROHIBITION AND RESTRICTIONS
+- Goods listed on the CBN's 43 Items list (e.g., rice, cement, toothpicks, poultry) are NOT eligible for foreign exchange from the official Nigerian Foreign Exchange Window. Importers of these items must source their FX independently but must still process a Form 'M' marked "Not Valid for Forex".
+- Strict penalties, including blacklisting, apply to exporters who fail to repatriate their export proceeds within the stipulated timeframe.

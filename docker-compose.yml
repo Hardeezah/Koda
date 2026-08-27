@@ -57,5 +57,28 @@ services:
     depends_on:
       - backend
 
+  scheduler:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    command: ["python", "scripts/scheduler.py"]
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/kodatrade
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - db
+      - redis
+
+  phoenix:
+    image: arizeai/phoenix:latest
+    container_name: kodatrade_phoenix
+    ports:
+      - "6006:6006" # Phoenix UI
+      - "4317:4317" # OTLP gRPC receiver
+    restart: always
+
 volumes:
   postgres_data:

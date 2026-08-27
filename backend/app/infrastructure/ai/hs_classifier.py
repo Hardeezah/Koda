@@ -1,9 +1,21 @@
 import os
-import json
+import instructor
 from groq import AsyncGroq
+from tenacity import retry, wait_exponential, stop_after_attempt
 from app.domain.models.vision import ProductAttributes, HSCodeResult, HSCodeCandidate
 from app.infrastructure.db.hs_code_repository import hs_code_repository
+from app.infrastructure.ai.prompts import HS_CLASSIFICATION_SYSTEM_PROMPT, HS_CLASSIFICATION_PROMPT_TEMPLATE
 from typing import List
+from pydantic import BaseModel
+
+
+class HSCodeLLMResponse(BaseModel):
+    assigned_code: str
+    description: str
+    confidence: float
+    chapter: str
+    heading: str
+    reasoning: str
 
 
 CATEGORY_CHAPTER_HINTS = {
@@ -23,7 +35,7 @@ CATEGORY_CHAPTER_HINTS = {
 
 class HSClassifier:
     def __init__(self):
-        self.client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
+        self.client = instructor.from_groq(AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON)
         self.model = "llama-3.3-70b-versatile"
 
     def _build_search_query(self, attrs: ProductAttributes) -> str:
@@ -48,66 +60,44 @@ class HSClassifier:
             )
         return "\n".join(lines)
 
+    @retry(wait=wait_exponential(min=1, max=10), stop=stop_after_attempt(3))
     async def classify(self, attrs: ProductAttributes) -> HSCodeResult:
         query = self._build_search_query(attrs)
         candidates = await hs_code_repository.semantic_search(query, match_count=5)
 
         chapter_hints = CATEGORY_CHAPTER_HINTS.get(attrs.category, [])
+        chapter_hints_str = ", ".join(chapter_hints) if chapter_hints else "none"
 
-        prompt = f"""You are a Nigerian Customs HS Code classification expert.
+        prompt = HS_CLASSIFICATION_PROMPT_TEMPLATE.format(
+            product_name=attrs.product_name,
+            category=attrs.category,
+            description=attrs.description,
+            material=attrs.material or "unknown",
+            brand=attrs.brand or "unknown",
+            purpose=attrs.purpose or "unknown",
+            packaging=attrs.packaging or "unknown",
+            weight_class=attrs.weight_class or "unknown",
+            origin_cues=attrs.origin_cues or "none visible",
+            candidates_str=self._format_candidates(candidates),
+            chapter_hints=chapter_hints_str
+        )
 
-Product attributes extracted from image:
-- Name: {attrs.product_name}
-- Category: {attrs.category}
-- Description: {attrs.description}
-- Material: {attrs.material or "unknown"}
-- Brand: {attrs.brand or "unknown"}
-- Purpose: {attrs.purpose or "unknown"}
-- Packaging: {attrs.packaging or "unknown"}
-- Weight Class: {attrs.weight_class or "unknown"}
-- Origin Cues: {attrs.origin_cues or "none visible"}
-
-Vector similarity search returned these HS Code candidates:
-{self._format_candidates(candidates)}
-
-Category-based chapter hints for "{attrs.category}": {", ".join(chapter_hints) if chapter_hints else "none"}
-
-Select the single most accurate 6-digit or 4-digit HS Code for this product under the Nigerian Customs Tariff (based on WCO Harmonized System).
-If vector candidates are strong (similarity > 0.85), prefer them. Otherwise use your expert knowledge.
-
-Return ONLY this JSON:
-{{
-  "assigned_code": "exact HS code digits e.g. 090111",
-  "description": "official HS description for this code",
-  "confidence": 0.0 to 1.0,
-  "chapter": "2-digit chapter number",
-  "heading": "4-digit heading",
-  "reasoning": "one sentence explaining why this code is correct for this specific product"
-}}"""
-
-        completion = await self.client.chat.completions.create(
+        raw_response = await self.client.chat.completions.create(
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an HS Code classification expert. Return ONLY valid JSON.",
+                    "content": HS_CLASSIFICATION_SYSTEM_PROMPT,
                 },
                 {"role": "user", "content": prompt},
             ],
             model=self.model,
-            response_format={"type": "json_object"},
+            response_model=HSCodeLLMResponse,
             temperature=0.1,
         )
 
-        raw = json.loads(completion.choices[0].message.content)
-
         return HSCodeResult(
-            assigned_code=raw.get("assigned_code", ""),
-            description=raw.get("description", ""),
-            confidence=float(raw.get("confidence", 0.5)),
-            chapter=raw.get("chapter", ""),
-            heading=raw.get("heading", ""),
+            **raw_response.model_dump(),
             candidates=candidates,
-            reasoning=raw.get("reasoning", ""),
         )
 
 

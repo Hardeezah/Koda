@@ -1,0 +1,53 @@
+name: MLOps Quality Gate
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/app/infrastructure/rag/**'
+      - 'backend/app/infrastructure/ai/**'
+      - 'backend/assets/regulations/**'
+
+env:
+  # Supabase is required for embedding retrieval during test
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+  
+  # Groq is required for the actual RAG generation
+  GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+  
+  # OpenAI is required by Ragas as the LLM Judge for evaluation
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+jobs:
+  rag-evaluation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install ML Dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run RAG Evaluation (Quality Gate)
+        run: |
+          cd backend
+          # This script will automatically exit with code 1 if Faithfulness < 0.85
+          python scripts/evaluate_rag.py
+
+      - name: Upload MLflow Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mlruns-tracking
+          path: backend/mlruns/
+          retention-days: 7

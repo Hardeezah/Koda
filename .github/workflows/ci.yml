@@ -30,7 +30,14 @@ jobs:
           cd backend
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install ruff
+      - name: Lint with Ruff
+        run: |
+          cd backend
+          ruff check .
       - name: Run tests
+        env:
+          ENABLE_PHOENIX: "false"
         run: |
           cd backend
           pytest --cov=app tests/

@@ -16,20 +16,48 @@ AGENCY_SHORT_MAP = {
 }
 
 
+_shared_cross_encoder = None
+
+def _get_cross_encoder():
+    global _shared_cross_encoder
+    if _shared_cross_encoder is None:
+        try:
+            from fastembed import TextCrossEncoder
+            _shared_cross_encoder = TextCrossEncoder(model_name="Xenova/ms-marco-MiniLM-L-6-v2")
+        except ImportError:
+            logger.warning("fastembed not installed, cross-encoder disabled.")
+            _shared_cross_encoder = False
+    return _shared_cross_encoder
+
 def rerank(chunks: List[RetrievedChunk], query_terms: List[str]) -> List[RetrievedChunk]:
     if not chunks:
         return []
 
-    query_lower = [t.lower() for t in query_terms]
+    encoder = _get_cross_encoder()
+    query = " ".join(query_terms)
 
-    def score(chunk: RetrievedChunk) -> float:
-        content_lower = chunk.content.lower()
-        keyword_hits = sum(1 for term in query_lower if term in content_lower)
-        keyword_boost = keyword_hits * 0.05
-        return chunk.similarity + keyword_boost
+    if not encoder:
+        # Fallback to simple keyword boost if fastembed is missing
+        query_lower = [t.lower() for t in query_terms]
+        def score(chunk: RetrievedChunk) -> float:
+            content_lower = chunk.content.lower()
+            keyword_hits = sum(1 for term in query_lower if term in content_lower)
+            return chunk.similarity + (keyword_hits * 0.05)
+        return sorted(chunks, key=score, reverse=True)
 
-    ranked = sorted(chunks, key=score, reverse=True)
-    return ranked
+    # Use Cross-Encoder for precise semantic relevance
+    pairs = [(query, chunk.content) for chunk in chunks]
+    # Fastembed returns a generator of scores
+    scores = list(encoder.rerank(query, [chunk.content for chunk in chunks]))
+    
+    # We zip chunks with their new cross-encoder score
+    for chunk, score in zip(chunks, scores):
+        # Update the similarity to reflect the cross-encoder score
+        chunk.similarity = float(score)
+
+    # Filter out very low-scoring chunks to keep context window clean
+    ranked = [c for c in chunks if c.similarity > 0.0]
+    return sorted(ranked, key=lambda c: c.similarity, reverse=True)
 
 
 def format_context(chunks: List[RetrievedChunk], max_chars: int = 6000) -> str:

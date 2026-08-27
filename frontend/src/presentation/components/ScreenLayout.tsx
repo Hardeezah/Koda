@@ -45,7 +45,7 @@ export const ScreenLayout = ({
         </View>
       )}
 
-      <SafeAreaView className="flex-1">
+      <SafeAreaView className="flex-1 w-full max-w-md mx-auto">
         {/* Header */}
         <View className="px-6 pb-4">
           <View className="flex-row items-center justify-between">
