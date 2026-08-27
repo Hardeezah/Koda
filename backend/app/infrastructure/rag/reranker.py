@@ -1,5 +1,6 @@
 import logging
 from typing import List
+
 from app.domain.models.rag import RetrievedChunk
 
 logger = logging.getLogger(__name__)
@@ -16,10 +17,16 @@ AGENCY_SHORT_MAP = {
 }
 
 
+import os
+
 _shared_cross_encoder = None
 
 def _get_cross_encoder():
     global _shared_cross_encoder
+    if os.environ.get("DISABLE_LOCAL_RERANKER", "false").lower() == "true":
+        logger.info("Local reranker is disabled via environment variable to save memory.")
+        return False
+        
     if _shared_cross_encoder is None:
         try:
             from fastembed import TextCrossEncoder
@@ -49,7 +56,7 @@ def rerank(chunks: List[RetrievedChunk], query_terms: List[str]) -> List[Retriev
     pairs = [(query, chunk.content) for chunk in chunks]
     # Fastembed returns a generator of scores
     scores = list(encoder.rerank(query, [chunk.content for chunk in chunks]))
-    
+
     # We zip chunks with their new cross-encoder score
     for chunk, score in zip(chunks, scores):
         # Update the similarity to reflect the cross-encoder score
