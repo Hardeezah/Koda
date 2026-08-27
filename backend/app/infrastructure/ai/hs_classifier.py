@@ -41,7 +41,7 @@ CATEGORY_CHAPTER_HINTS = {
 class HSClassifier:
     def __init__(self):
         self.client = instructor.from_groq(AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON)
-        self.model = "llama-3.3-70b-versatile"
+        self.model = "qwen/qwen3.8-27b"
 
     def _build_search_query(self, attrs: ProductAttributes) -> str:
         parts = [attrs.product_name]

@@ -87,7 +87,7 @@ class IntelligenceService:
         self.client = instructor.from_groq(
             AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON
         )
-        self.model = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+        self.model = os.environ.get("GROQ_MODEL", "qwen/qwen3.8-27b")
         self.vision_model = os.environ.get("GROQ_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
         self.temperature = float(os.environ.get("COMPLIANCE_TEMPERATURE", "0.2"))
 

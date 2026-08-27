@@ -82,7 +82,7 @@ class ComplianceChain:
         self.client = instructor.from_groq(
             AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON
         )
-        self.model = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+        self.model = os.environ.get("GROQ_MODEL", "qwen/qwen3.8-27b")
         self.temperature = float(os.environ.get("COMPLIANCE_TEMPERATURE", "0.2"))
 
         self.graph = self._build_graph()

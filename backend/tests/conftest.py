@@ -6,7 +6,7 @@ import pytest
 
 # Set test environment variables BEFORE any app imports
 os.environ.setdefault("GROQ_API_KEY", "test-groq-key")
-os.environ.setdefault("GROQ_MODEL", "llama-3.3-70b-versatile")
+os.environ.setdefault("GROQ_MODEL", "qwen/qwen3.8-27b")
 os.environ.setdefault("COMPLIANCE_TEMPERATURE", "0.2")
 os.environ.setdefault("SUPABASE_URL", "https://test.supabase.co")
 os.environ.setdefault("SUPABASE_KEY", "test-key")

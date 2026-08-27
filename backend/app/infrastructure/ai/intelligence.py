@@ -88,7 +88,7 @@ class IntelligenceService:
         self.client = instructor.from_groq(
             AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON
         )
-        self.model = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+        self.model = os.environ.get("GROQ_MODEL", "qwen/qwen3.8-27b")
         self.temperature = float(os.environ.get("COMPLIANCE_TEMPERATURE", "0.2"))
 
     def _build_prompt(self, product_name: str, hs_code: str, direction: str, retrieved_context: Optional[str] = None) -> str:

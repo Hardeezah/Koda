@@ -14,7 +14,7 @@ class DraftEmail(BaseModel):
 class CommunicationService:
     def __init__(self):
         self.client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
-        self.model = "llama-3.3-70b-versatile"
+        self.model = "qwen/qwen3.8-27b"
 
     async def draft_broker_email(self, entry: TradeEntry, profile: Profile) -> DraftEmail:
         prompt = f"""
