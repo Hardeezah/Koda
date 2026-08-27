@@ -1,11 +1,19 @@
-from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel
-from typing import Optional
-from app.domain.models import ComplianceReport, ProductMetadata, TradeStatus, ComplianceRisk, TradeEntry
-from app.api.v1.deps import get_product_repo, get_ledger_repo, get_current_user
-from app.infrastructure.ai.intelligence import intelligence_service
-from app.infrastructure.ai.compliance_utils import compliance_dict_to_report
 import uuid
+from typing import Optional
+
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel
+
+from app.api.v1.deps import get_current_user, get_ledger_repo, get_product_repo
+from app.domain.models import (
+    ComplianceReport,
+    ComplianceRisk,
+    ProductMetadata,
+    TradeEntry,
+    TradeStatus,
+)
+from app.infrastructure.ai.compliance_utils import compliance_dict_to_report
+from app.infrastructure.ai.intelligence import intelligence_service
 
 router = APIRouter()
 

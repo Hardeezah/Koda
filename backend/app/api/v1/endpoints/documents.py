@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
+
+from app.api.v1.deps import get_current_user, get_ledger_repo, get_profile_repo
 from app.infrastructure.documents.document_service import document_service
-from app.api.v1.deps import get_profile_repo, get_ledger_repo, get_current_user
 
 router = APIRouter()
 

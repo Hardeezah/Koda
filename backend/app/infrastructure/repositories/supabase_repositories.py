@@ -1,7 +1,13 @@
-from typing import Optional, List
-from app.domain.models import Profile, TradeEntry, ProductMetadata
-from app.domain.repositories import ProfileRepository, LedgerRepository, ProductRepository
+from typing import List, Optional
+
+from app.domain.models import ProductMetadata, Profile, TradeEntry
+from app.domain.repositories import (
+    LedgerRepository,
+    ProductRepository,
+    ProfileRepository,
+)
 from app.infrastructure.supabase import get_supabase, get_supabase_admin
+
 
 class SupabaseProfileRepository(ProfileRepository):
     def __init__(self):

@@ -1,17 +1,20 @@
-import pytest
-import sys
 import os
+import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from app.infrastructure.rag.reranker import (
-    rerank,
-    format_context,
-    extract_citations,
-    AGENCY_SHORT_MAP,
-)
 from app.domain.models.rag import RetrievedChunk
-from app.infrastructure.rag.document_ingestion import _chunk_text, CHUNK_SIZE, CHUNK_OVERLAP
+from app.infrastructure.rag.document_ingestion import (
+    CHUNK_OVERLAP,
+    CHUNK_SIZE,
+    _chunk_text,
+)
+from app.infrastructure.rag.reranker import (
+    AGENCY_SHORT_MAP,
+    extract_citations,
+    format_context,
+    rerank,
+)
 
 
 def _make_chunk(

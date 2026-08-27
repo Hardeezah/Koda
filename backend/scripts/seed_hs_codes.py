@@ -10,8 +10,8 @@ representative headings for the categories most relevant to Nigerian trade.
 Re-running is idempotent via upsert on the code column.
 """
 import asyncio
-import sys
 import pathlib
+import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 

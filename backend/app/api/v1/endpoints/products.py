@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException, Depends
 from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
+
+from app.api.v1.deps import get_product_repo
 from app.domain.models import ProductMetadata
 from app.domain.repositories import ProductRepository
-from app.api.v1.deps import get_product_repo
 
 router = APIRouter()
 

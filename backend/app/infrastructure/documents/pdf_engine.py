@@ -1,9 +1,9 @@
 import io
-from typing import Optional
-from app.infrastructure.documents.renderers.form_m import render_form_m
-from app.infrastructure.documents.renderers.nxp import render_nxp
+
 from app.infrastructure.documents.renderers.coo import render_coo
+from app.infrastructure.documents.renderers.form_m import render_form_m
 from app.infrastructure.documents.renderers.nafdac import render_nafdac
+from app.infrastructure.documents.renderers.nxp import render_nxp
 from app.infrastructure.documents.renderers.son_mancap import render_son_mancap
 
 SUPPORTED_DOCUMENTS = {

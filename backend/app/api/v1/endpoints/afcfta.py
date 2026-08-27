@@ -1,17 +1,19 @@
 import json
 import logging
-from fastapi import APIRouter, HTTPException, Depends
-from app.domain.models import AfCFTACheckRequest, AfCFTACheckResponse
-from app.infrastructure.db.afcfta_queries import (
-    query_tariff_schedule,
-    query_roo_requirements,
-    format_afcfta_context,
-    compute_tariff_saving,
-)
-from app.infrastructure.supabase import get_supabase_admin
-from app.infrastructure.redis_client import redis_service
-from app.infrastructure.ai.intelligence import intelligence_service
+
+from fastapi import APIRouter, Depends, HTTPException
+
 from app.api.v1.deps import get_current_user
+from app.domain.models import AfCFTACheckRequest, AfCFTACheckResponse
+from app.infrastructure.ai.intelligence import intelligence_service
+from app.infrastructure.db.afcfta_queries import (
+    compute_tariff_saving,
+    format_afcfta_context,
+    query_roo_requirements,
+    query_tariff_schedule,
+)
+from app.infrastructure.redis_client import redis_service
+from app.infrastructure.supabase import get_supabase_admin
 
 logger = logging.getLogger(__name__)
 
@@ -82,6 +84,6 @@ async def check_afcfta(
 
         return response
 
-    except Exception as e:
+    except Exception:
         logger.exception("AfCFTA check failed")
         raise HTTPException(status_code=500, detail="AfCFTA check failed")

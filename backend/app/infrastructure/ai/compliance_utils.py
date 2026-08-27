@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timezone
+
 from app.domain.models import ComplianceReport, ComplianceRisk, TradeStatus
 
 logger = logging.getLogger(__name__)

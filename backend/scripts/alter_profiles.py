@@ -1,4 +1,5 @@
 import os
+
 import psycopg2
 from dotenv import load_dotenv
 
@@ -11,7 +12,7 @@ if not database_url:
     exit(1)
 
 try:
-    print(f"Connecting to database...")
+    print("Connecting to database...")
     conn = psycopg2.connect(database_url)
     conn.autocommit = True
     cursor = conn.cursor()
@@ -29,11 +30,11 @@ try:
     -- Reload Supabase postgrest schema cache
     NOTIFY pgrst, 'reload schema';
     """
-    
+
     print("Executing ALTER TABLE and NOTIFY pgrst...")
     cursor.execute(alter_sql)
     print("Schema updated successfully!")
-    
+
     cursor.close()
     conn.close()
 

@@ -1,8 +1,10 @@
 import pytest
-from httpx import AsyncClient, ASGITransport
-from app.main import app
+from httpx import ASGITransport, AsyncClient
+
 from app.api.v1.deps import get_product_repo
 from app.domain.models import ProductMetadata
+from app.main import app
+
 
 class MockProductRepo:
     async def list_all(self):

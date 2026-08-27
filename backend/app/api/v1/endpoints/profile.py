@@ -1,8 +1,10 @@
 import logging
+
 from fastapi import APIRouter, Depends, HTTPException
+
+from app.api.v1.deps import get_current_user, get_profile_repo
 from app.domain.models import Profile
 from app.domain.repositories import ProfileRepository
-from app.api.v1.deps import get_profile_repo, get_current_user
 
 logger = logging.getLogger(__name__)
 

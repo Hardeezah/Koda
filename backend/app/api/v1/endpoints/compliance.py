@@ -1,8 +1,10 @@
 import logging
-from fastapi import APIRouter, HTTPException, Depends
+
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, field_validator
-from app.infrastructure.ai.intelligence import intelligence_service
+
 from app.api.v1.deps import get_current_user
+from app.infrastructure.ai.intelligence import intelligence_service
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +66,7 @@ async def check_compliance(
             hs_code=request.hs_code,
             direction=request.direction,
         )
-    except Exception as e:
+    except Exception:
         logger.exception("Compliance check failed for %s", request.product_name)
         raise HTTPException(status_code=500, detail="Compliance check failed")
 
@@ -84,7 +86,7 @@ async def analyze_image_endpoint(
         return result
     except HTTPException:
         raise
-    except Exception as e:
+    except Exception:
         logger.exception("Image analysis failed")
         raise HTTPException(status_code=500, detail="Vision analysis failed")
 
@@ -108,6 +110,6 @@ async def generate_document(
             cac_number=request.cac_number,
         )
         return result
-    except Exception as e:
+    except Exception:
         logger.exception("Document generation failed")
         raise HTTPException(status_code=500, detail="Document generation failed")

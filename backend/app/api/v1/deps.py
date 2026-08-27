@@ -1,5 +1,7 @@
 import logging
-from fastapi import Depends, Header, HTTPException
+
+from fastapi import Header, HTTPException
+
 from app.infrastructure.supabase import get_supabase_admin
 
 logger = logging.getLogger(__name__)

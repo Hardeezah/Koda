@@ -17,12 +17,15 @@ This script embeds and upserts all present files into the document_chunks
 pgvector table in Supabase. Re-running is idempotent.
 """
 import asyncio
-import sys
 import pathlib
+import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
-from app.infrastructure.rag.document_ingestion import ingest_all_from_assets, AGENCY_REGISTRY
+from app.infrastructure.rag.document_ingestion import (
+    AGENCY_REGISTRY,
+    ingest_all_from_assets,
+)
 
 
 async def main():

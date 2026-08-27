@@ -1,12 +1,17 @@
 import os
+from typing import List
+
 import instructor
 from groq import AsyncGroq
-from tenacity import retry, wait_exponential, stop_after_attempt
-from app.domain.models.vision import ProductAttributes, HSCodeResult, HSCodeCandidate
-from app.infrastructure.db.hs_code_repository import hs_code_repository
-from app.infrastructure.ai.prompts import HS_CLASSIFICATION_SYSTEM_PROMPT, HS_CLASSIFICATION_PROMPT_TEMPLATE
-from typing import List
 from pydantic import BaseModel
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+from app.domain.models.vision import HSCodeCandidate, HSCodeResult, ProductAttributes
+from app.infrastructure.ai.prompts import (
+    HS_CLASSIFICATION_PROMPT_TEMPLATE,
+    HS_CLASSIFICATION_SYSTEM_PROMPT,
+)
+from app.infrastructure.db.hs_code_repository import hs_code_repository
 
 
 class HSCodeLLMResponse(BaseModel):

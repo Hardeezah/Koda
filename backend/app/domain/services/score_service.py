@@ -1,5 +1,6 @@
 from app.infrastructure.supabase import get_supabase_admin
 
+
 async def calculate_score(user_id: str) -> dict:
     """Calculate export readiness score."""
     supabase = get_supabase_admin()   # Make sure this returns the correct client
@@ -53,8 +54,8 @@ async def calculate_score(user_id: str) -> dict:
         score += 15
 
     afcfta_ready = any(ch.get('eligible') for ch in afcfta)
-    corridors = list({ch.get('destination_country') 
-                     for ch in afcfta 
+    corridors = list({ch.get('destination_country')
+                     for ch in afcfta
                      if ch.get('destination_country')})
 
     final_score = min(score, 100)

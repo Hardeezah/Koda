@@ -1,8 +1,11 @@
-import os
 import json
+import os
+
 from groq import AsyncGroq
 from pydantic import BaseModel
-from app.domain.models import TradeEntry, Profile
+
+from app.domain.models import Profile, TradeEntry
+
 
 class DraftEmail(BaseModel):
     subject: str
@@ -47,9 +50,9 @@ class CommunicationService:
                 model=self.model,
                 response_format={"type": "json_object"},
             )
-            
+
             result = json.loads(chat_completion.choices[0].message.content)
-            
+
             return DraftEmail(
                 subject=result.get("subject", "Customs Brokerage Request"),
                 body=result.get("body", "Please find our Form M draft attached.")

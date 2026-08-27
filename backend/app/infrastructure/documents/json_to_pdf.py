@@ -1,5 +1,6 @@
-from app.infrastructure.documents.pdf_engine import render_document
 import io
+
+from app.infrastructure.documents.pdf_engine import render_document
 
 
 def ai_json_to_pdf(document_code: str, ai_content: dict, business_context: dict) -> io.BytesIO:

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class AfCFTACheckRequest(BaseModel):
     product_name: str
     hs_code: str

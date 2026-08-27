@@ -1,4 +1,5 @@
 import logging
+import os
 from typing import List
 
 from app.domain.models.rag import RetrievedChunk
@@ -15,9 +16,6 @@ AGENCY_SHORT_MAP = {
     "National Agricultural Quarantine Service": "NAQS",
     "NESREA": "NESREA",
 }
-
-
-import os
 
 _shared_cross_encoder = None
 

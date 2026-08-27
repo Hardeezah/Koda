@@ -1,9 +1,9 @@
-import os
-import logging
 import asyncio
+import logging
 from typing import List, Optional
-from app.infrastructure.supabase import get_supabase_admin
+
 from app.domain.models.rag import RetrievedChunk
+from app.infrastructure.supabase import get_supabase_admin
 
 logger = logging.getLogger(__name__)
 

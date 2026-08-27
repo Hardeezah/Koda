@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, Depends
-from app.infrastructure.ai.communication import communication_service, DraftEmail
-from app.api.v1.deps import get_profile_repo, get_ledger_repo, get_current_user
+from fastapi import APIRouter, Depends, HTTPException
+
+from app.api.v1.deps import get_current_user, get_ledger_repo, get_profile_repo
+from app.infrastructure.ai.communication import DraftEmail, communication_service
 
 router = APIRouter()
 

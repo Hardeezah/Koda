@@ -1,6 +1,8 @@
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
-from unittest.mock import AsyncMock, patch, MagicMock
-from app.domain.models.rag import RetrievedChunk, CitedComplianceVerdict, Citation
+
+from app.domain.models.rag import RetrievedChunk
 
 
 @pytest.fixture
@@ -187,7 +189,7 @@ class TestComplianceChainFailurePaths:
     @pytest.mark.asyncio
     async def test_chain_empty_retrieval_sets_retrieval_used_false(self):
         from app.infrastructure.rag.compliance_chain import ImportVerdictResponse
-        
+
         mock_verdict = ImportVerdictResponse(
             product_name="Ginger",
             status="under_review",
@@ -218,7 +220,7 @@ class TestComplianceChainFailurePaths:
     @pytest.mark.asyncio
     async def test_chain_export_direction_uses_export_schema(self):
         from app.infrastructure.rag.compliance_chain import ExportVerdictResponse
-        
+
         mock_verdict = ExportVerdictResponse(
             product_name="Ginger",
             status="compliant",
@@ -250,7 +252,7 @@ class TestComplianceChainFailurePaths:
     @pytest.mark.asyncio
     async def test_chain_supplementary_context_in_prompt(self):
         from app.infrastructure.rag.compliance_chain import ExportVerdictResponse
-        
+
         mock_verdict = ExportVerdictResponse(
             product_name="Ginger",
             status="compliant",

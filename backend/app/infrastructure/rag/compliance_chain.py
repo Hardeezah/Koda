@@ -1,15 +1,15 @@
-import os
-import json
 import logging
+import os
+from typing import Any, List, Optional, TypedDict
+
 import instructor
 from groq import AsyncGroq
-from typing import Optional, List, TypedDict, Any
+from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field
-from langgraph.graph import StateGraph, START, END
 
+from app.domain.models.rag import Citation, CitedComplianceVerdict, ComplianceItem, Risk
+from app.infrastructure.rag.reranker import extract_citations, format_context, rerank
 from app.infrastructure.rag.retriever import regulatory_retriever
-from app.infrastructure.rag.reranker import rerank, format_context, extract_citations
-from app.domain.models.rag import CitedComplianceVerdict, Citation, ComplianceItem, Risk
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class ComplianceState(TypedDict):
     hs_code: Optional[str]
     direction: str
     supplementary_context: Optional[str]
-    
+
     # Internal state passed between nodes
     query_terms: List[str]
     chunks: List[Any]  # RetrievedChunk
@@ -26,7 +26,7 @@ class ComplianceState(TypedDict):
     citations: List[Citation]
     context_str: str
     retrieval_used: bool
-    
+
     # Final output
     verdict: Optional[CitedComplianceVerdict]
     error: Optional[str]
@@ -84,46 +84,47 @@ class ComplianceChain:
         )
         self.model = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
         self.temperature = float(os.environ.get("COMPLIANCE_TEMPERATURE", "0.2"))
-        
+
         self.graph = self._build_graph()
 
     def _build_graph(self) -> StateGraph:
         workflow = StateGraph(ComplianceState)
-        
+
         workflow.add_node("retrieve", self._node_retrieve)
         workflow.add_node("rerank", self._node_rerank)
         workflow.add_node("generate", self._node_generate)
-        
+
         workflow.add_edge(START, "retrieve")
         workflow.add_edge("retrieve", "rerank")
         workflow.add_edge("rerank", "generate")
         workflow.add_edge("generate", END)
-        
+
         return workflow.compile()
 
     async def _node_retrieve(self, state: ComplianceState) -> dict:
         product_name = state["product_name"]
         direction = state["direction"]
-        
+
         chunks = []
         try:
             chunks = await regulatory_retriever.retrieve_for_compliance(product_name, direction)
         except Exception as e:
             logger.error("Retrieval failed: %s", e)
-            
+
         if not chunks:
             logger.info(f"No local chunks found for {product_name}. Initiating Agentic Web Search fallback...")
             try:
                 from duckduckgo_search import DDGS
+
                 from app.domain.models.rag import RetrievedChunk
-                
+
                 query = f"Nigeria {direction} customs tariff requirements guidelines {product_name}"
-                
+
                 # Use DDGS synchronously in a thread pool, or since it's lightweight just run it
                 # DDGS now supports async, but we can just use the standard text search
                 with DDGS() as ddgs:
                     results = list(ddgs.text(query, max_results=3))
-                    
+
                 web_chunks = []
                 for i, r in enumerate(results):
                     web_chunks.append(RetrievedChunk(
@@ -144,15 +145,15 @@ class ComplianceChain:
         product_name = state["product_name"]
         direction = state["direction"]
         chunks = state.get("chunks", [])
-        
+
         query_terms = product_name.lower().split() + [direction, "nigeria", "compliance"]
         ranked_chunks = rerank(chunks, query_terms)
-        
+
         context_str = format_context(ranked_chunks)
         raw_citations = extract_citations(ranked_chunks)
         citations = [Citation(**c) for c in raw_citations]
         retrieval_used = len(ranked_chunks) > 0
-        
+
         return {
             "query_terms": query_terms,
             "ranked_chunks": ranked_chunks,
@@ -166,14 +167,14 @@ class ComplianceChain:
         context = state.get("context_str", "")
         supplementary_context = state.get("supplementary_context")
         retrieval_used = state.get("retrieval_used", False)
-        
+
         direction_label = "EXPORT from Nigeria to an African country" if direction == "export" else "IMPORT into Nigeria"
         system_prompt = (
             f"You are a senior Nigerian trade compliance expert specializing in Nigerian {direction_label} regulations. "
             "You have been provided with retrieved excerpts from official regulatory documents below. "
             "Your compliance verdict MUST be grounded in these documents. "
         )
-        
+
         if not retrieval_used:
             system_prompt += (
                 " No regulatory documents were retrieved from the vector store. "
@@ -201,7 +202,7 @@ Reference the specific source documents in your summary and what_to_do fields wh
 """
 
         response_model = ExportVerdictResponse if direction == "export" else ImportVerdictResponse
-        
+
         try:
             completion = await self.client.chat.completions.create(
                 messages=[
@@ -212,12 +213,12 @@ Reference the specific source documents in your summary and what_to_do fields wh
                 response_model=response_model,
                 temperature=self.temperature,
             )
-            
+
             raw = completion.model_dump()
-            
+
             risks = [Risk(**r) for r in raw.get("risks", [])]
             compliance_items = [ComplianceItem(**c) for c in raw.get("compliance_items", [])]
-            
+
             verdict = CitedComplianceVerdict(
                 product_name=raw.get("product_name") or state["product_name"],
                 status=raw.get("status", "under_review"),
@@ -238,9 +239,9 @@ Reference the specific source documents in your summary and what_to_do fields wh
                 vat_percent=raw.get("vat_percent", 7.5),
                 retrieval_used=retrieval_used,
             )
-            
+
             return {"verdict": verdict}
-            
+
         except Exception as e:
             logger.error("Groq LLM call failed in orchestrator: %s", e)
             return {"error": str(e)}
@@ -252,19 +253,19 @@ Reference the specific source documents in your summary and what_to_do fields wh
         direction: str = "import",
         supplementary_context: Optional[str] = None,
     ) -> CitedComplianceVerdict:
-        
+
         initial_state = {
             "product_name": product_name,
             "hs_code": hs_code,
             "direction": direction,
             "supplementary_context": supplementary_context,
         }
-        
+
         final_state = await self.graph.ainvoke(initial_state)
-        
+
         if final_state.get("error") and not final_state.get("verdict"):
             raise ValueError(f"Orchestrator failed: {final_state['error']}")
-            
+
         return final_state["verdict"]
 
 

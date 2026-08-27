@@ -1,7 +1,7 @@
-import os
-import pathlib
 import logging
-from typing import List, Dict, Optional
+import pathlib
+from typing import Dict, List, Optional
+
 from app.infrastructure.supabase import get_supabase_admin
 
 logger = logging.getLogger(__name__)

@@ -1,22 +1,22 @@
-import os
 import json
 import logging
-from datetime import datetime, timezone
+import os
+from typing import List, Optional
+
 import instructor
 from groq import AsyncGroq
-from tenacity import retry, wait_exponential, stop_after_attempt
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from tenacity import retry, stop_after_attempt, wait_exponential
 
+from app.infrastructure.ai.cache import llm_cache
 from app.infrastructure.ai.prompts import (
-    COMPLIANCE_SYSTEM_PROMPT,
     COMPLIANCE_EXPORT_PROMPT_TEMPLATE,
     COMPLIANCE_IMPORT_PROMPT_TEMPLATE,
-    FEW_SHOT_EXPORT_EXAMPLE,
+    COMPLIANCE_SYSTEM_PROMPT,
+    DOCUMENT_GENERATION_PROMPT_TEMPLATE,
     DOCUMENT_GENERATION_SYSTEM_PROMPT,
-    DOCUMENT_GENERATION_PROMPT_TEMPLATE
+    FEW_SHOT_EXPORT_EXAMPLE,
 )
-from app.infrastructure.ai.cache import llm_cache
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +98,7 @@ class IntelligenceService:
             context_block = f"\nRELEVANT REGULATORY DOCUMENTS:\n{retrieved_context}\n\nGround your answer in the above documents where applicable.\n"
 
         template = COMPLIANCE_EXPORT_PROMPT_TEMPLATE if direction == "export" else COMPLIANCE_IMPORT_PROMPT_TEMPLATE
-        
+
         return template.format(
             context_block=context_block,
             product_name=product_name,
@@ -151,11 +151,11 @@ class IntelligenceService:
         combined_context = "\n".join(context_parts) if context_parts else None
 
         prompt = self._build_prompt(product_name, hs_code, direction, combined_context)
-        
+
         messages = [
             {"role": "system", "content": COMPLIANCE_SYSTEM_PROMPT},
         ]
-        
+
         if direction == "export":
             # Add few-shot example for export to improve consistency
             messages.append({"role": "user", "content": self._build_prompt("Cocoa Beans", "180100", "export", None)})
@@ -169,7 +169,7 @@ class IntelligenceService:
             response_model=ComplianceAnalysisResponse,
             temperature=self.temperature,
         )
-        
+
         result = chat_completion.model_dump()
         result["direction"] = direction
         result["retrieval_used"] = False
@@ -178,9 +178,9 @@ class IntelligenceService:
 
     @llm_cache(ttl_seconds=86400)
     async def analyze_image(self, base64_image: str, direction: str = "import") -> dict:
-        from app.infrastructure.ai.vision_pipeline import vision_pipeline
-        from app.infrastructure.ai.hs_classifier import hs_classifier
         from app.domain.models.vision import VisualAnalysisResult
+        from app.infrastructure.ai.hs_classifier import hs_classifier
+        from app.infrastructure.ai.vision_pipeline import vision_pipeline
 
         try:
             logger.info("Processing image - length: %d", len(base64_image))
@@ -228,8 +228,8 @@ class IntelligenceService:
         business_address: str = None,
         cac_number: str = None,
     ) -> dict:
+        from app.infrastructure.rag.reranker import format_context, rerank
         from app.infrastructure.rag.retriever import regulatory_retriever
-        from app.infrastructure.rag.reranker import rerank, format_context
 
         reg_context = ""
         try:
@@ -253,7 +253,7 @@ class IntelligenceService:
 
     Ground the document content in the above regulations where applicable.
     """
-        
+
         prompt = DOCUMENT_GENERATION_PROMPT_TEMPLATE.format(
             context_block=context_block,
             document_name=document_name,

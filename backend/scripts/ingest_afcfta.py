@@ -1,10 +1,9 @@
-import os
-import json
 import pathlib
-import requests
-from typing import List, Dict, Any
+from typing import Dict, List
 
-from app.infrastructure.ai.intelligence import add_metadata, intelligence_service
+import requests
+
+from app.infrastructure.ai.intelligence import add_metadata
 from app.infrastructure.redis_client import redis_service
 
 # Directory where PDFs are stored (committed assets)

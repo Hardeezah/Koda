@@ -1,6 +1,8 @@
 import os
-from upstash_redis import Redis
 from typing import Optional
+
+from upstash_redis import Redis
+
 
 class RedisClient:
     def __init__(self):

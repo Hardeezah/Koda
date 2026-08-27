@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field, EmailStr
-from typing import Optional, List
 from datetime import date
 from enum import Enum
+from typing import List, Optional
+
+from pydantic import BaseModel, EmailStr, Field
+
 
 class Incoterm(str, Enum):
     FOB = "FOB"

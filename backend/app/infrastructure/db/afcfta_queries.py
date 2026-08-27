@@ -1,6 +1,7 @@
-from app.infrastructure.supabase import get_supabase_admin
-from typing import Optional, Dict, Any, List
 import json
+from typing import Any, Dict, List, Optional
+
+from app.infrastructure.supabase import get_supabase_admin
 
 
 async def query_tariff_schedule(

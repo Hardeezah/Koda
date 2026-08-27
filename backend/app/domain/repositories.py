@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Optional, List
-from app.domain.models import Profile, TradeEntry, ProductMetadata
+from typing import List, Optional
+
+from app.domain.models import ProductMetadata, Profile, TradeEntry
+
 
 class ProfileRepository(ABC):
     @abstractmethod

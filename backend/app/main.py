@@ -1,23 +1,24 @@
-import os
 import logging
+import os
+
+import phoenix as px
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.middleware.rate_limit import RateLimitMiddleware
-import phoenix as px
 from openinference.instrumentation.groq import GroqInstrumentor
 
 from app.api.v1.endpoints import (
-    health,
+    afcfta,
     auth,
-    profile,
-    ledger,
-    products,
+    communication_api,
     compliance,
     documents,
-    communication_api,
+    health,
+    ledger,
     orchestration,
-    afcfta,
+    products,
+    profile,
 )
+from app.middleware.rate_limit import RateLimitMiddleware
 
 logger = logging.getLogger(__name__)
 

@@ -1,9 +1,10 @@
-import os
-import json
 import hashlib
+import json
 import logging
+import os
 from functools import wraps
-from typing import Callable, Any, TypeVar
+from typing import Any, Callable, TypeVar
+
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -53,7 +54,7 @@ def llm_cache(ttl_seconds: int = 86400, response_model: type[BaseModel] = None):
                         data = json.loads(cached_data)
                     else:
                         data = cached_data
-                        
+
                     if response_model:
                         # If the original function returns a dictionary but it's meant to be a model
                         return data # Depending on intelligence.py returning dicts.

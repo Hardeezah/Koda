@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, EmailStr
-from app.infrastructure.supabase import get_supabase_admin
-from app.domain.models import Profile
+
 from app.api.v1.deps import get_profile_repo
+from app.domain.models import Profile
+from app.infrastructure.supabase import get_supabase_admin
 
 router = APIRouter()
 
@@ -17,7 +18,7 @@ async def register_user(
     profile_repo = Depends(get_profile_repo)
 ):
     admin = get_supabase_admin()
-    
+
     # 1. Create User in Auth with email_confirm=True
     try:
         response = admin.auth.admin.create_user({

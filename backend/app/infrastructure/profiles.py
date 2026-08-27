@@ -1,5 +1,6 @@
 from app.infrastructure.supabase import get_supabase_admin
 
+
 async def set_user_mode(user_id: str, mode: str) -> None:
     """Persist the import/export mode for a user.
     mode must be either "import" or "export".

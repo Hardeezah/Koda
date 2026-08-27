@@ -1,8 +1,10 @@
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
-from unittest.mock import AsyncMock, patch, MagicMock
-from app.domain.models.rag import RetrievedChunk, CitedComplianceVerdict, Citation, Risk
-from app.infrastructure.ai.compliance_utils import compliance_dict_to_report
+
 from app.domain.models import TradeStatus
+from app.domain.models.rag import Citation, CitedComplianceVerdict, RetrievedChunk
+from app.infrastructure.ai.compliance_utils import compliance_dict_to_report
 
 
 def test_compliance_dict_to_report():
@@ -59,8 +61,11 @@ async def test_compliance_chain_uses_retrieval():
             similarity=0.82,
         )
     ]
-    
-    from app.infrastructure.rag.compliance_chain import ImportVerdictResponse, ComplianceChain
+
+    from app.infrastructure.rag.compliance_chain import (
+        ComplianceChain,
+        ImportVerdictResponse,
+    )
     mock_verdict = ImportVerdictResponse(
         product_name="Ginger",
         status="compliant",

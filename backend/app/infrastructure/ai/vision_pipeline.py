@@ -1,7 +1,9 @@
 import os
+
 import instructor
 from groq import AsyncGroq
-from tenacity import retry, wait_exponential, stop_after_attempt
+from tenacity import retry, stop_after_attempt, wait_exponential
+
 from app.domain.models.vision import ProductAttributes
 from app.infrastructure.ai.prompts import VISION_PIPELINE_SYSTEM_PROMPT
 

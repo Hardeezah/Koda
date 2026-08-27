@@ -1,8 +1,9 @@
 import pytest
-from httpx import AsyncClient, ASGITransport
-from app.main import app
-from app.api.v1.deps import get_product_repo, get_ledger_repo, get_current_user
+from httpx import ASGITransport, AsyncClient
+
+from app.api.v1.deps import get_current_user, get_ledger_repo, get_product_repo
 from app.domain.models import ProductMetadata
+from app.main import app
 
 
 class MockProductRepo:

@@ -1,7 +1,8 @@
-import sys
 import os
+import sys
+from unittest.mock import MagicMock
+
 import pytest
-from unittest.mock import AsyncMock, MagicMock
 
 # Set test environment variables BEFORE any app imports
 os.environ.setdefault("GROQ_API_KEY", "test-groq-key")
@@ -47,7 +48,7 @@ def mock_retrieved_chunks():
 @pytest.fixture
 def mock_cited_verdict():
     """Standard CitedComplianceVerdict for testing."""
-    from app.domain.models.rag import CitedComplianceVerdict, Citation
+    from app.domain.models.rag import Citation, CitedComplianceVerdict
     return CitedComplianceVerdict(
         product_name="Ginger",
         status="compliant",

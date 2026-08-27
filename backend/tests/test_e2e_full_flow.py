@@ -1,8 +1,11 @@
+from unittest.mock import AsyncMock, patch
+
 import pytest
 from fastapi.testclient import TestClient
-from unittest.mock import patch, AsyncMock
-from app.main import app
+
 from app.api.v1.deps import get_current_user
+from app.main import app
+
 client = TestClient(app)
 
 @pytest.fixture(autouse=True)
@@ -18,15 +21,15 @@ def mock_dependencies():
          patch("app.infrastructure.redis_client.redis_service.redis") as mock_redis, \
          patch("app.infrastructure.rag.compliance_chain.compliance_chain.graph.ainvoke", new_callable=AsyncMock) as mock_invoke, \
          patch("app.infrastructure.ai.intelligence.intelligence_service.generate_document", new_callable=AsyncMock) as mock_generate_doc:
-         
+
         # Mock Supabase
         mock_supabase.return_value.from_.return_value.insert.return_value.execute.return_value = {"data": []}
-        
+
         # Mock Redis
         mock_redis.get.return_value = None
-        
+
         # Mock LangGraph Output
-        from app.domain.models.rag import CitedComplianceVerdict, Citation, Risk
+        from app.domain.models.rag import CitedComplianceVerdict
         mock_invoke.return_value = {
             "verdict": CitedComplianceVerdict(
                 product_name="Cocoa Beans",
@@ -43,7 +46,7 @@ def mock_dependencies():
                 retrieval_used=True,
             )
         }
-        
+
         # Mock Document Generation
         mock_generate_doc.return_value = {
             "document_name": "Form NXP",
@@ -54,7 +57,7 @@ def mock_dependencies():
             "submission_steps": ["Step 1"],
             "supporting_documents_checklist": []
         }
-        
+
         yield {
             "invoke": mock_invoke,
             "gen_doc": mock_generate_doc
@@ -79,13 +82,13 @@ def test_e2e_compliance_flow(mock_dependencies):
         json=payload,
         headers={"Authorization": "Bearer fake_token"}
     )
-    
+
     assert response.status_code == 200
     data = response.json()
     assert data["product_name"] == "Cocoa Beans"
     assert data["status"] == "compliant"
     assert data["direction"] == "export"
-    
+
     mock_dependencies["invoke"].assert_called_once()
 
 
@@ -96,22 +99,22 @@ def test_e2e_afcfta_flow(mock_dependencies):
         "hs_code": "1801.00",
         "destination_country": "Ghana"
     }
-    
+
     # Needs a mock for query_tariff_schedule etc., since afcfta endpoint does DB lookups
     with patch("app.api.v1.endpoints.afcfta.query_tariff_schedule", new_callable=AsyncMock) as mock_tariff, \
          patch("app.api.v1.endpoints.afcfta.query_roo_requirements", new_callable=AsyncMock) as mock_roo, \
          patch("app.api.v1.endpoints.afcfta.get_supabase_admin") as mock_supa:
-        
+
         mock_tariff.return_value = {"mfn_rate": 20.0, "afcfta_rate": 0.0}
         mock_roo.return_value = [{"hs_code_prefix": "1801", "rule": "Wholly obtained"}]
         mock_supa.return_value.from_.return_value.insert.return_value.execute.return_value = {"data": []}
-        
+
         response = client.post(
             "/api/v1/afcfta/check",
             json=payload,
             headers={"Authorization": "Bearer fake_token"}
         )
-        
+
         assert response.status_code == 200
         data = response.json()
         assert data["eligible"] is True
@@ -132,10 +135,10 @@ def test_e2e_document_generation_flow(mock_dependencies):
         json=payload,
         headers={"Authorization": "Bearer fake_token"}
     )
-    
+
     assert response.status_code == 200
     data = response.json()
     assert data["document_name"] == "Form NXP"
     assert "cover_letter" in data
-    
+
     mock_dependencies["gen_doc"].assert_called_once()
