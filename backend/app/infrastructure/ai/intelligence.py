@@ -89,7 +89,6 @@ class IntelligenceService:
             AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON
         )
         self.model = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
-        self.vision_model = os.environ.get("GROQ_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
         self.temperature = float(os.environ.get("COMPLIANCE_TEMPERATURE", "0.2"))
 
     def _build_prompt(self, product_name: str, hs_code: str, direction: str, retrieved_context: Optional[str] = None) -> str:
