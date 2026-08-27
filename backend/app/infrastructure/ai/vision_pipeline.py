@@ -11,7 +11,7 @@ from app.infrastructure.ai.prompts import VISION_PIPELINE_SYSTEM_PROMPT
 class VisionPipeline:
     def __init__(self):
         self.client = instructor.from_groq(AsyncGroq(api_key=os.environ.get("GROQ_API_KEY")), mode=instructor.Mode.JSON)
-        self.vision_model = os.environ.get("GROQ_VISION_MODEL", "llama-3.2-90b-vision-preview")
+        self.vision_model = os.environ.get("GROQ_VISION_MODEL", "qwen/qwen3.6-27b")
 
     def _strip_data_prefix(self, base64_image: str) -> str:
         if "," in base64_image:
