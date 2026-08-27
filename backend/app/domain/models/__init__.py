@@ -1,25 +1,44 @@
-from pydantic import BaseModel, EmailStr, model_validator
-from typing import Optional, List, Any
-from enum import Enum
 from datetime import datetime
-from app.domain.models.compliance import TradeStatus, ComplianceRisk, ComplianceReport, AfCFTACheckRequest, AfCFTACheckResponse
-from app.domain.models.vision import ProductAttributes, HSCodeCandidate, HSCodeResult, VisualAnalysisResult
-from app.domain.models.rag import RetrievedChunk, Citation, ComplianceItem, Risk, CitedComplianceVerdict
+from typing import Any, List, Optional
+
+from pydantic import BaseModel, EmailStr, model_validator
+
+from app.domain.models.compliance import (
+    AfCFTACheckRequest,
+    AfCFTACheckResponse,
+    ComplianceReport,
+    ComplianceRisk,
+    TradeStatus,
+)
 from app.domain.models.documents import (
-    Incoterm,
-    PaymentTerm,
-    PartyInfo,
-    LineItem,
+    BillOfLading,
+    CertificateOfOrigin,
+    CleanCertificateOfInspection,
     CommercialInvoice,
+    Incoterm,
+    LineItem,
+    NXPFormRequest,
     PackageDetail,
     PackingList,
-    NXPFormRequest,
-    CertificateOfOrigin,
+    PartyInfo,
+    PaymentTerm,
     PhytosanitaryCertificateRequest,
     SingleGoodsDeclaration,
-    CleanCertificateOfInspection,
-    BillOfLading,
 )
+from app.domain.models.rag import (
+    Citation,
+    CitedComplianceVerdict,
+    ComplianceItem,
+    RetrievedChunk,
+    Risk,
+)
+from app.domain.models.vision import (
+    HSCodeCandidate,
+    HSCodeResult,
+    ProductAttributes,
+    VisualAnalysisResult,
+)
+
 
 class Profile(BaseModel):
     id: str
