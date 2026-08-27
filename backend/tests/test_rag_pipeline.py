@@ -210,7 +210,8 @@ class TestComplianceChainFailurePaths:
         with patch(
             "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
-        ):
+        ), patch("duckduckgo_search.DDGS") as mock_ddgs:
+            mock_ddgs.return_value.__enter__.return_value.text.return_value = []
             chain = self._make_chain(mock_client)
             verdict = await chain.run("Ginger", direction="import")
 
@@ -241,7 +242,8 @@ class TestComplianceChainFailurePaths:
         with patch(
             "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
-        ):
+        ), patch("duckduckgo_search.DDGS") as mock_ddgs:
+            mock_ddgs.return_value.__enter__.return_value.text.return_value = []
             chain = self._make_chain(mock_client)
             verdict = await chain.run("Ginger", direction="export")
 
@@ -273,7 +275,8 @@ class TestComplianceChainFailurePaths:
         with patch(
             "app.infrastructure.rag.retriever.regulatory_retriever.retrieve_for_compliance",
             new=AsyncMock(return_value=[]),
-        ):
+        ), patch("duckduckgo_search.DDGS") as mock_ddgs:
+            mock_ddgs.return_value.__enter__.return_value.text.return_value = []
             chain = self._make_chain(mock_client)
             await chain.run(
                 "Ginger",

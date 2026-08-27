@@ -1,0 +1,31 @@
+name: Keep Backend and Database Alive
+
+on:
+  schedule:
+    # Runs every 14 minutes to prevent Render free-tier (15 min inactivity) sleep
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping API Health Endpoint
+        env:
+          # Ensure you add PRODUCTION_API_URL to your GitHub Repository Secrets
+          # Example: https://your-backend-app.onrender.com
+          API_URL: ${{ secrets.PRODUCTION_API_URL }}
+        run: |
+          if [ -z "$API_URL" ]; then
+            echo "API_URL secret is not set. Please add PRODUCTION_API_URL to GitHub Secrets."
+            exit 1
+          fi
+          
+          echo "Pinging $API_URL/api/v1/health ..."
+          
+          # We use curl to hit the health endpoint
+          # The health endpoint has been updated to query Supabase as well,
+          # meaning this single ping keeps BOTH Render and Supabase alive.
+          curl -f -s "$API_URL/api/v1/health"
+          
+          echo "Ping successful!"
